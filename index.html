@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucas MOUSSY — Student Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════
+       TOKENS
+    ═══════════════════════════════ */
+    :root {
+      --black:   #080808;
+      --off:     #0f0f0f;
+      --rule:    #1c1c1c;
+      --muted:   #333333;
+      --mid:     #666666;
+      --light:   #aaaaaa;
+      --white:   #00FF41;
+      --accent:  #f2f0eb;
+      --mark:    #e8e0d0;
+      --red:     #c8372d;
+
+      --f-display: 'Bebas Neue', 'Arial Black', sans-serif;
+      --f-body:    'Barlow', sans-serif;
+      --f-cond:    'Barlow Condensed', sans-serif;
+    }
+
+    /* ═══════════════════════════════
+       RESET
+    ═══════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--f-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--white); color: var(--black); }
+
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--white); }
+
+    /* ═══════════════════════════════
+       NAV
+    ═══════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: stretch;
+      height: 48px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--black);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      border-right: 1px solid var(--rule);
+      font-family: var(--f-display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links li {
+      border-left: 1px solid var(--rule);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 22px;
+      font-family: var(--f-cond);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--black);
+      background: var(--white);
+    }
+
+    .nav-hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      border-left: 1px solid var(--rule);
+      background: none;
+      border-top: none; border-right: none; border-bottom: none;
+      cursor: crosshair;
+      color: var(--white);
+      font-size: 18px;
+    }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding-top: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 48px 0;
+      position: relative;
+    }
+
+    /* giant background number */
+    .hero-ghost {
+      position: absolute;
+      top: 50%;
+      right: -20px;
+      transform: translateY(-50%);
+      font-family: var(--f-display);
+      font-size: clamp(200px, 35vw, 520px);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--rule);
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-tag {
+      font-family: var(--f-cond);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: up 0.6s 0.1s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--f-display);
+      font-size: clamp(72px, 12vw, 180px);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      opacity: 0;
+      animation: up 0.6s 0.25s forwards;
+    }
+
+    .hero-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--rule);
+      margin: 40px 0 0;
+      opacity: 0;
+      animation: up 0.6s 0.4s forwards;
+    }
+
+    .hero-bar {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      animation: up 0.6s 0.55s forwards;
+    }
+
+    .hero-bar-item {
+      padding: 20px 28px;
+      border-right: 1px solid var(--rule);
+      font-family: var(--f-cond);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .hero-bar-item:last-child { border-right: none; margin-left: auto; color: var(--red); }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════
+       SECTION BASE
+    ═══════════════════════════════ */
+    .section {
+      border-top: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-num-col {
+      border-right: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 0;
+    }
+
+    .section-num {
+      font-family: var(--f-display);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .section-title-col {
+      padding: 40px 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-family: var(--f-display);
+      font-size: clamp(48px, 8vw, 100px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--white);
+    }
+
+    .section-title-label {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      align-self: flex-end;
+      padding-bottom: 8px;
+      white-space: nowrap;
+    }
+
+    .section-body {
+      padding: 64px 48px 64px 128px;
+    }
+
+    /* ═══════════════════════════════
+       REVEAL
+    ═══════════════════════════════ */
+    .r {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .r.on { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════
+       PROJECT CARD
+    ═══════════════════════════════ */
+    .project {
+      border: 1px solid var(--rule);
+      margin-bottom: 32px;
+    }
+
+    .project-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .project-index {
+      font-family: var(--f-display);
+      font-size: 56px;
+      line-height: 1;
+      color: var(--rule);
+      padding: 20px 28px;
+      border-right: 1px solid var(--rule);
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+    }
+
+    .project-meta {
+      padding: 20px 28px;
+    }
+
+    .project-tag {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+
+    .project-title {
+      font-family: var(--f-display);
+      font-size: clamp(18px, 2.5vw, 28px);
+      letter-spacing: 0.04em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .project-body {
+      padding: 32px 28px;
+    }
+
+    .project-text {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--light);
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+
+    .sub-label {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin: 28px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sub-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .skill-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .skill-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+      color: var(--light);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .skill-list li:nth-child(odd) { padding-right: 24px; border-right: 1px solid var(--rule); }
+    .skill-list li:nth-child(even) { padding-left: 24px; }
+
+    .skill-list li::before {
+      content: '—';
+      color: var(--muted);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* image placeholder */
+    .img-slot {
+      border: 1px dashed var(--rule);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 32px;
+      color: var(--muted);
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 28px;
+      aspect-ratio: 16/7;
+    }
+
+    .img-slot-icon { font-size: 20px; opacity: 0.3; }
+
+    .img-real {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      margin-top: 28px;
+    }
+
+    /* ═══════════════════════════════
+       SEMESTER GRID
+    ═══════════════════════════════ */
+    .semester-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule);
+      margin-top: 40px;
+    }
+
+    .sem {
+      padding: 28px;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sem:nth-child(3n) { border-right: none; }
+    .sem:nth-last-child(-n+3) { border-bottom: none; }
+
+    .sem-num {
+      font-family: var(--f-display);
+      font-size: 42px;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .sem-label {
+      font-family: var(--f-cond);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .sem ul { list-style: none; }
+    .sem li {
+      font-size: 12px;
+      color: var(--light);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.4;
+    }
+    .sem li:last-child { border-bottom: none; }
+
+    .sem.soon { opacity: 0.25; }
+    .sem.soon .sem-soon {
+      font-family: var(--f-display);
+      font-size: 18px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════
+       MOBILITY
+    ═══════════════════════════════ */
+    .mobility-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+
+    .mob-card {
+      padding: 40px;
+      border-right: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .mob-card:last-child { border-right: none; }
+
+    .mob-num {
+      font-family: var(--f-display);
+      font-size: 120px;
+      color: var(--rule);
+      line-height: 1;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      user-select: none;
+    }
+
+    .mob-date {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 12px;
+    }
+
+    .mob-place {
+      font-family: var(--f-display);
+      font-size: clamp(36px, 5vw, 60px);
+      color: var(--white);
+      line-height: 0.9;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .mob-text {
+      font-size: 13px;
+      line-height: 1.85;
+      color: var(--light);
+    }
+
+    /* ═══════════════════════════════
+       ENGAGEMENT
+    ═══════════════════════════════ */
+    .eng-list { border: 1px solid var(--rule); }
+
+    .eng-item {
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: stretch;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.2s;
+    }
+
+    .eng-item:last-child { border-bottom: none; }
+    .eng-item:hover { background: var(--off); }
+
+    .eng-n {
+      font-family: var(--f-display);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--rule);
+      letter-spacing: 0.05em;
+    }
+
+    .eng-content {
+      padding: 20px 24px;
+    }
+
+    .eng-cat {
+      font-family: var(--f-cond);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 4px;
+    }
+
+    .eng-name {
+      font-family: var(--f-cond);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .eng-desc {
+      font-size: 12px;
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    .eng-date {
+      padding: 20px 24px;
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      border-left: 1px solid var(--rule);
+      white-space: nowrap;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      min-height: 80px;
+    }
+
+    /* sub-section heading inside body */
+    .cat-heading {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 20px 0 12px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+
+    /* ═══════════════════════════════
+       SPORT
+    ═══════════════════════════════ */
+    .sport-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule);
+    }
+
+    .sport-card {
+      padding: 36px 28px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .sport-card:last-child { border-right: none; }
+
+    .sport-num {
+      font-family: var(--f-display);
+      font-size: 64px;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .sport-name {
+      font-family: var(--f-display);
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .sport-cat {
+      font-family: var(--f-cond);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .sport-desc {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--light);
+    }
+
+    /* ═══════════════════════════════
+       CAREER
+    ═══════════════════════════════ */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule);
+    }
+
+    .career-card {
+      padding: 36px 28px;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: crosshair;
+      transition: background 0.2s;
+    }
+
+    .career-card:hover { background: var(--off); }
+    .career-card:nth-child(3n) { border-right: none; }
+    .career-card:nth-last-child(-n+3) { border-bottom: none; }
+
+    .career-card a {
+      display: contents;
+    }
+
+    .career-icon {
+      font-family: var(--f-display);
+      font-size: 40px;
+      color: var(--rule);
+      line-height: 1;
+    }
+
+    .career-name {
+      font-family: var(--f-cond);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .career-sub {
+      font-size: 12px;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+
+    .career-link {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--white);
+      transition: color 0.2s;
+      width: fit-content;
+    }
+    .career-link:hover { color: var(--light); border-color: var(--light); }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+    }
+
+    .footer-left {
+      border-right: 1px solid var(--rule);
+      padding: 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-left span {
+      font-family: var(--f-display);
+      font-size: 11px;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.15em;
+    }
+
+    .footer-name {
+      padding: 28px 48px;
+      font-family: var(--f-display);
+      font-size: clamp(28px, 5vw, 56px);
+      color: var(--rule);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-right {
+      border-left: 1px solid var(--rule);
+      padding: 28px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 160px;
+    }
+
+    .footer-copy {
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 48px; left: 0; right: 0;
+        background: var(--black);
+        border-bottom: 1px solid var(--rule);
+      }
+      .nav-links.open li { border-left: none; border-top: 1px solid var(--rule); }
+      .nav-links.open a { padding: 16px 24px; height: auto; }
+
+      .section-body { padding: 40px 24px 40px 24px; }
+      .section-title-col { padding: 24px; }
+      .section-num-col { display: none; }
+
+      .hero-inner { padding: 40px 24px 0; }
+      .hero-bar-item { padding: 14px 16px; font-size: 10px; }
+      .hero-ghost { display: none; }
+
+      .mobility-grid { grid-template-columns: 1fr; }
+      .mob-card { border-right: none; border-bottom: 1px solid var(--rule); }
+      .mob-card:last-child { border-bottom: none; }
+      .mob-num { display: none; }
+
+      .semester-grid { grid-template-columns: 1fr 1fr; }
+      .sem:nth-child(3n) { border-right: 1px solid var(--rule); }
+      .sem:nth-child(2n) { border-right: none; }
+
+      .sport-grid { grid-template-columns: 1fr; }
+      .sport-card { border-right: none; border-bottom: 1px solid var(--rule); }
+      .sport-card:last-child { border-bottom: none; }
+
+      .career-grid { grid-template-columns: 1fr 1fr; }
+      .career-card:nth-child(3n) { border-right: 1px solid var(--rule); }
+      .career-card:nth-child(2n) { border-right: none; }
+
+      .skill-list { grid-template-columns: 1fr; }
+      .skill-list li:nth-child(odd) { border-right: none; padding-right: 0; }
+      .skill-list li:nth-child(even) { padding-left: 0; }
+
+      footer { grid-template-columns: 1fr; }
+      .footer-left { display: none; }
+      .footer-right { border-left: none; border-top: 1px solid var(--rule); flex-direction: row; align-items: center; }
+      .footer-name { padding: 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .semester-grid { grid-template-columns: 1fr; }
+      .sem:nth-child(n) { border-right: none; }
+      .career-grid { grid-template-columns: 1fr; }
+      .career-card:nth-child(n) { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav>
+  <a href="#home" class="nav-logo">LM</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#engineering">Engineering</a></li>
+    <li><a href="#mobility">Mobility</a></li>
+    <li><a href="#engagement">Engagement</a></li>
+    <li><a href="#sport">Sport</a></li>
+    <li><a href="#career">Career</a></li>
+  </ul>
+  <button class="nav-hamburger" id="burger" aria-label="Menu">☰</button>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-ghost" aria-hidden="true">LM</div>
+    <p class="hero-tag">Eportfolio &nbsp;/&nbsp; Student Engineer &nbsp;/&nbsp; ENSEEIHT</p>
+    <h1 class="hero-name">LUCAS<br>MOUSSY</h1>
+    <div class="hero-rule"></div>
+  </div>
+  <div class="hero-bar">
+    <span class="hero-bar-item">Digital Sciences</span>
+    <span class="hero-bar-item">Toulouse, France</span>
+    <span class="hero-bar-item">2026</span>
+    <span class="hero-bar-item">↓ Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════ 01 ENGINEERING ══════════════ -->
+<section class="section" id="engineering">
+  <div class="section-head">
+    <div class="section-num-col">
+      <span class="section-num">01</span>
+    </div>
+    <div class="section-title-col">
+      <h2 class="section-title">ENGINEERING<br>COURSE</h2>
+      <span class="section-title-label">School Projects & Curriculum</span>
+    </div>
+  </div>
+
+  <div class="section-body">
+
+    <!-- PROJECT -->
+    <div class="project r">
+      <div class="project-head">
+        <div class="project-index">P1</div>
+        <div class="project-meta">
+          <p class="project-tag">School Project · Semester 4 · Group of 6 · ~80h/person</p>
+          <h3 class="project-title">GRADIENT DESCENT<br>MATHEMATICAL & ALGORITHMIC ASPECTS</h3>
+        </div>
+      </div>
+      <div class="project-body">
+        <p class="project-text">A deep analysis of the Gradient Descent algorithm — both its mathematical theory and practical implementation. Applied to image recognition for detecting plastic bottle pollution in the oceans. Carried out during the fourth semester of Classe Préparatoire.</p>
+
+        <p class="project-text">The primary objective was to build and test a neural network capable of determining whether AI could be a viable tool for environmental action — specifically detecting plastic bottle pollution at sea.</p>
+
+        <div class="sub-label">Key Skills</div>
+        <ul class="skill-list">
+          <li><strong>Algorithm Implementation</strong> — Gradient Descent in Python: classic, stochastic & momentum-based versions.</li>
+          <li><strong>Neural Network Development</strong> — Custom MLP with Reseau & Neurone classes from scratch.</li>
+          <li><strong>Model Training & Application</strong> — MNIST dataset + custom 6,000-image ocean bottle dataset.</li>
+          <li><strong>Comparative Analysis</strong> — Custom model (87% precision) vs TensorFlow (99.89% precision).</li>
+          <li><strong>Ecological Impact</strong> — CarbonTracker to measure kWh and CO₂ emissions of the AI.</li>
+          <li><strong>Collaborative Dev</strong> — Git, Overleaf, Notion within a six-person team.</li>
+        </ul>
+
+        <div class="sub-label">Reflection</div>
+        <p class="project-text">We proved technical feasibility but concluded that detecting bottles alone provides limited environmental benefit without collaboration with specialists. We also found that more complex CNN models carry significantly higher energy costs — a critical factor often overlooked.</p>
+
+        <!-- Image placeholder — replace with: <img class="img-real" src="images/project-gradient.jpg" alt="Gradient Descent project"> -->
+        <div class="img-slot">
+          <span class="img-slot-icon">[ ]</span>
+          <span>images/project-gradient.jpg</span>
+          <span style="font-size:9px;color:var(--muted);margin-top:2px;">Replace placeholder with your image</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMATION -->
+    <div class="r" style="margin-top:48px;">
+      <div class="sub-label">Formation · ENSEEIHT</div>
+      <div class="semester-grid">
+        <div class="sem">
+          <div class="sem-num">05</div>
+          <p class="sem-label">Semester 5</p>
+          <ul>
+            <li>Integration & Applications — Probabilities</li>
+            <li>Imperative Programming</li>
+            <li>Numerical Analysis — Statistics</li>
+            <li>Automation — Data Analysis</li>
+            <li>Modeling — Architecture</li>
+            <li>Soft & Human Skills (EN · JP · Sport · Careers)</li>
+          </ul>
+        </div>
+        <div class="sem">
+          <div class="sem-num">06</div>
+          <p class="sem-label">Semester 6</p>
+          <ul>
+            <li>Signal Processing — Telecommunications</li>
+            <li>Networks</li>
+            <li>Scientific Computing — Learning</li>
+            <li>Object Technology</li>
+            <li>Architecture — System</li>
+            <li>Soft & Human Skills 2 (EN · JP · Sport · Careers)</li>
+          </ul>
+        </div>
+        <div class="sem soon">
+          <div class="sem-num">07</div>
+          <p class="sem-label">Semester 7</p>
+          <p class="sem-soon">SOON</p>
+        </div>
+        <div class="sem soon">
+          <div class="sem-num">08</div>
+          <p class="sem-label">Semester 8</p>
+          <p class="sem-soon">SOON</p>
+        </div>
+        <div class="sem soon">
+          <div class="sem-num">09</div>
+          <p class="sem-label">Semester 9</p>
+          <p class="sem-soon">SOON</p>
+        </div>
+        <div class="sem soon">
+          <div class="sem-num">10</div>
+          <p class="sem-label">Semester 10</p>
+          <p class="sem-soon">SOON</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ 02 MOBILITY ══════════════ -->
+<section class="section" id="mobility">
+  <div class="section-head">
+    <div class="section-num-col">
+      <span class="section-num">02</span>
+    </div>
+    <div class="section-title-col">
+      <h2 class="section-title">INTERNATIONAL<br>MOBILITY</h2>
+      <span class="section-title-label">Study Abroad Programs</span>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div class="mobility-grid r">
+
+      <div class="mob-card">
+        <div class="mob-num" aria-hidden="true">JP</div>
+        <p class="mob-date">Summer 2026 · 7 Weeks · Yokohama, Japan</p>
+        <h3 class="mob-place">JAPAN</h3>
+        <p class="mob-text">The primary objective of this seven-week immersion program in Yokohama is to develop a dual competency: operational proficiency in the Japanese language and an understanding of the country's professional culture. As a future engineer in Digital Sciences, Japan represents a leading technological and industrial ecosystem. This program provides the essential linguistic and intercultural tools indispensable for future collaboration and effective interaction.</p>
+        <!-- <img class="img-real" src="images/japan.jpg" alt="Japan program"> -->
+        <div class="img-slot" style="margin-top:24px;aspect-ratio:4/3;">
+          <span class="img-slot-icon">[ ]</span>
+          <span>images/japan.jpg</span>
+        </div>
+      </div>
+
+      <div class="mob-card">
+        <div class="mob-num" aria-hidden="true">EU</div>
+        <p class="mob-date">Semester 8 · Europe — Destination TBD</p>
+        <h3 class="mob-place">EUROPE</h3>
+        <p class="mob-text">My objective is to complete part of a semester at a partner European university. This mobility is intended to deepen my technical expertise within a different academic system, enhance cross-cultural communication skills, and begin building a professional network within the European Union.</p>
+        <p class="mob-text" style="margin-top:12px;">The destination is not yet fixed — deliberately. My priority is to find the best academic program and research opportunity aligned with my Digital Sciences specialization, rather than limiting options to a single country.</p>
+        <!-- <img class="img-real" src="images/europe.jpg" alt="Europe mobility"> -->
+        <div class="img-slot" style="margin-top:24px;aspect-ratio:4/3;">
+          <span class="img-slot-icon">[ ]</span>
+          <span>images/europe.jpg</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 03 ENGAGEMENT ══════════════ -->
+<section class="section" id="engagement">
+  <div class="section-head">
+    <div class="section-num-col">
+      <span class="section-num">03</span>
+    </div>
+    <div class="section-title-col">
+      <h2 class="section-title">ENGAGEMENT<br>& INTERESTS</h2>
+      <span class="section-title-label">Sustainability & Civic Action</span>
+    </div>
+  </div>
+
+  <div class="section-body">
+
+    <p class="cat-heading r">Sustainability & Civic Engagement</p>
+    <div class="eng-list r">
+
+      <div class="eng-item">
+        <div class="eng-n">01</div>
+        <div class="eng-content">
+          <p class="eng-cat">Social Awareness</p>
+          <p class="eng-name">« Le Procès King Kong »</p>
+          <p class="eng-desc">An interactive theater workshop designed to raise awareness of sexist and sexual violence (VSS), harassment, and discrimination.</p>
+        </div>
+        <div class="eng-date">VSS Workshop</div>
+      </div>
+
+      <div class="eng-item">
+        <div class="eng-n">02</div>
+        <div class="eng-content">
+          <p class="eng-cat">Environmental Action</p>
+          <p class="eng-name">Clean Walk — Toulouse</p>
+          <p class="eng-desc">Collecting as much waste as possible in the city of Toulouse, contributing directly to a cleaner urban environment.</p>
+        </div>
+        <div class="eng-date">Sept 5, 2025</div>
+      </div>
+
+      <div class="eng-item">
+        <div class="eng-n">03</div>
+        <div class="eng-content">
+          <p class="eng-cat">Climate Workshop</p>
+          <p class="eng-name">Climate Fresk</p>
+          <p class="eng-desc">A collaborative 3-hour workshop designed to clearly understand the causes and consequences of climate change.</p>
+        </div>
+        <div class="eng-date">3h Workshop</div>
+      </div>
+
+      <div class="eng-item">
+        <div class="eng-n">04</div>
+        <div class="eng-content">
+          <p class="eng-cat">Climate Workshop</p>
+          <p class="eng-name">Planetary Boundaries Fresk</p>
+          <p class="eng-desc">An interactive workshop providing a systemic view of environmental challenges — the 9 interconnected planetary boundaries: biodiversity, water cycle, land use, and beyond.</p>
+        </div>
+        <div class="eng-date">Fresk Session</div>
+      </div>
+
+      <div class="eng-item">
+        <div class="eng-n">05</div>
+        <div class="eng-content">
+          <p class="eng-cat">Climate Workshop</p>
+          <p class="eng-name">2tonnes Workshop</p>
+          <p class="eng-desc">An immersive simulation exploring the individual and collective levers needed to limit carbon footprint to 2 tonnes per person by 2050, in line with the Paris Agreement.</p>
+        </div>
+        <div class="eng-date">2t Simulation</div>
+      </div>
+
+      <div class="eng-item">
+        <div class="eng-n">06</div>
+        <div class="eng-content">
+          <p class="eng-cat">Education & Mentoring</p>
+          <p class="eng-name">Student Exhibition</p>
+          <p class="eng-desc">Led eight workshops on education — sharing my career path and answering questions from high school students about higher education and engineering studies.</p>
+        </div>
+        <div class="eng-date">Dec 12, 2025</div>
+      </div>
+
+    </div>
+
+    <!-- engagement image placeholders -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:32px;" class="r">
+      <div class="img-slot" style="aspect-ratio:1/1;margin:0;border:none;background:var(--black);">
+        <span class="img-slot-icon">[ ]</span><span>images/cleanwalk.jpg</span>
+      </div>
+      <div class="img-slot" style="aspect-ratio:1/1;margin:0;border:none;background:var(--off);">
+        <span class="img-slot-icon">[ ]</span><span>images/climate-fresk.jpg</span>
+      </div>
+      <div class="img-slot" style="aspect-ratio:1/1;margin:0;border:none;background:var(--black);">
+        <span class="img-slot-icon">[ ]</span><span>images/2tonnes.jpg</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ 04 SPORT ══════════════ -->
+<section class="section" id="sport">
+  <div class="section-head">
+    <div class="section-num-col">
+      <span class="section-num">04</span>
+    </div>
+    <div class="section-title-col">
+      <h2 class="section-title">SPORT &<br>ACTIVITIES</h2>
+      <span class="section-title-label">Physical & Creative Practice</span>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div class="sport-grid r">
+
+      <div class="sport-card">
+        <div class="sport-num">01</div>
+        <p class="sport-cat">Sport · 4×/week</p>
+        <h4 class="sport-name">STRENGTH TRAINING</h4>
+        <p class="sport-desc">A lesson in discipline, resilience, and stress management. Provides the balance and focus required for engineering studies while teaching how to set and achieve long-term goals.</p>
+        <div class="img-slot" style="margin-top:20px;aspect-ratio:1/1;">
+          <span class="img-slot-icon">[ ]</span><span>images/strength-training.jpg</span>
+        </div>
+      </div>
+
+      <div class="sport-card">
+        <div class="sport-num">02</div>
+        <p class="sport-cat">Sport · 1×/week</p>
+        <h4 class="sport-name">RUNNING</h4>
+        <p class="sport-desc">Builds cardiovascular endurance and serves as an effective way to clear the mind — ensuring focus and energy for academic work throughout the week.</p>
+        <div class="img-slot" style="margin-top:20px;aspect-ratio:1/1;">
+          <span class="img-slot-icon">[ ]</span><span>images/running.jpg</span>
+        </div>
+      </div>
+
+      <div class="sport-card">
+        <div class="sport-num">03</div>
+        <p class="sport-cat">Other Activity · ENSEEIHT</p>
+        <h4 class="sport-name">IMPROV THEATER</h4>
+        <p class="sport-desc">Member of an improvisational theater group at ENSEEIHT. An excellent exercise in creativity, active listening, and thinking on your feet — improving public speaking confidence and adaptability in high-pressure situations.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 05 CAREER ══════════════ -->
+<section class="section" id="career">
+  <div class="section-head">
+    <div class="section-num-col">
+      <span class="section-num">05</span>
+    </div>
+    <div class="section-title-col">
+      <h2 class="section-title">CAREER<br>DEVELOPMENT</h2>
+      <span class="section-title-label">CV, LinkedIn & More</span>
+    </div>
+  </div>
+
+  <div class="section-body">
+    <div class="career-grid r">
+
+      <div class="career-card">
+        <div class="career-icon">CV</div>
+        <p class="career-name">Curriculum Vitae</p>
+        <p class="career-sub">My complete resume — formation, projects, and experience.</p>
+        <!-- Update href to your actual PDF path -->
+        <a href="images/cv-lucas-moussy.pdf" class="career-link" target="_blank">View PDF →</a>
+      </div>
+
+      <div class="career-card">
+        <div class="career-icon">LI</div>
+        <p class="career-name">LinkedIn</p>
+        <p class="career-sub">My professional profile and network.</p>
+        <!-- Update href to your actual LinkedIn URL -->
+        <a href="https://linkedin.com/in/" class="career-link" target="_blank">Open Profile →</a>
+      </div>
+
+      <div class="career-card">
+        <div class="career-icon">JP</div>
+        <p class="career-name">Japanese Presentation</p>
+        <p class="career-sub">自己紹介 — Self-introduction in Japanese.</p>
+        <!-- <img class="img-real" src="images/presentation-jp.jpg" alt="Japanese presentation"> -->
+        <div class="img-slot" style="margin-top:8px;aspect-ratio:4/3;">
+          <span class="img-slot-icon">[ ]</span><span>images/presentation-jp.jpg</span>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="career-icon">EP</div>
+        <p class="career-name">Elevator Pitch</p>
+        <p class="career-sub">A short video presentation of my profile and ambitions.</p>
+        <!-- Update href to your actual video URL -->
+        <a href="#" class="career-link">Watch Video →</a>
+      </div>
+
+      <div class="career-card" style="grid-column: span 2;">
+        <div class="career-icon">RM</div>
+        <p class="career-name">Role Models</p>
+        <p class="career-sub">LinkedIn profiles of professionals who inspire my career path and engineering vision. Add your role models' LinkedIn links here.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-left">
+    <span>EPORTFOLIO</span>
+  </div>
+  <div class="footer-name">LUCAS MOUSSY</div>
+  <div class="footer-right">
+    <span class="footer-copy">© 2026</span>
+    <span class="footer-copy">All rights reserved</span>
+  </div>
+</footer>
+
+<!-- ══════════════ JS ══════════════ -->
+<script>
+  // Hamburger
+  const burger = document.getElementById('burger');
+  const nav    = document.getElementById('navLinks');
+  burger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const siblings = [...e.target.parentElement.children].filter(c => c.classList.contains('r'));
+      const idx = siblings.indexOf(e.target);
+      e.target.style.transitionDelay = (idx * 0.07) + 's';
+      e.target.classList.add('on');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+  // Active nav
+  const sections = [...document.querySelectorAll('section[id]')];
+  const links    = [...document.querySelectorAll('.nav-links a')];
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }, { passive: true });
+</script>
+
+</body>
+</html>
