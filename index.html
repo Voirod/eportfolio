@@ -6,27 +6,41 @@
   <title>Lucas MOUSSY — Student Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
 
   <style>
     /* ═══════════════════════════════
-       TOKENS
+       TOKENS — Glassmorphism Clair
     ═══════════════════════════════ */
     :root {
-      --black:   #080808;
-      --off:     #0f0f0f;
-      --rule:    #1c1c1c;
-      --muted:   #333333;
-      --mid:     #666666;
-      --light:   #aaaaaa;
-      --white:   #00FF41;
-      --accent:  #f2f0eb;
-      --mark:    #e8e0d0;
-      --red:     #c8372d;
+      /* Background gradient stops */
+      --bg-from:   #d8ede2;
+      --bg-mid:    #e2edd8;
+      --bg-to:     #d9edea;
 
-      --f-display: 'Bebas Neue', 'Arial Black', sans-serif;
-      --f-body:    'Barlow', sans-serif;
-      --f-cond:    'Barlow Condensed', sans-serif;
+      /* Text */
+      --black:     #0f1523;
+      --off:       #1a2035;
+      --rule:      rgba(99, 120, 180, 0.18);
+      --rule-solid:#c5cfe8;
+      --muted:     #7a8fb5;
+      --mid:       #5a70a8;
+      --light:     #3a507a;
+      --white:     #1e2d50;
+      --accent:    #6BBF8E;
+      --accent2:   #4da876;
+      --mark:      #8fbfa8;
+      --red:       #e05c6a;
+
+      /* Glass */
+      --glass-bg:        rgba(255,255,255,0.55);
+      --glass-bg-strong: rgba(255,255,255,0.75);
+      --glass-border:    rgba(255,255,255,0.85);
+      --glass-shadow:    0 4px 32px rgba(107,191,142,0.08), 0 1px 0 rgba(255,255,255,0.9) inset;
+
+      --f-display: 'Syne', 'Arial Black', sans-serif;
+      --f-body:    'Inter', sans-serif;
+      --f-cond:    'Inter', sans-serif;
     }
 
     /* ═══════════════════════════════
@@ -35,20 +49,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      background: var(--black);
+      background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-mid) 50%, var(--bg-to) 100%);
+      background-attachment: fixed;
       color: var(--white);
       font-family: var(--f-body);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.7;
       overflow-x: hidden;
-      cursor: crosshair;
+      cursor: default;
+      min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
-    ::selection { background: var(--white); color: var(--black); }
+    ::selection { background: var(--accent); color: #fff; }
 
-    ::-webkit-scrollbar { width: 2px; }
-    ::-webkit-scrollbar-track { background: var(--black); }
-    ::-webkit-scrollbar-thumb { background: var(--white); }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--mark); border-radius: 4px; }
 
     /* ═══════════════════════════════
        NAV
@@ -59,9 +75,11 @@
       z-index: 200;
       display: flex;
       align-items: stretch;
-      height: 48px;
-      border-bottom: 1px solid var(--rule);
-      background: var(--black);
+      height: 56px;
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
 
     .nav-logo {
@@ -70,9 +88,10 @@
       padding: 0 28px;
       border-right: 1px solid var(--rule);
       font-family: var(--f-display);
-      font-size: 22px;
-      letter-spacing: 0.08em;
-      color: var(--white);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--accent);
       white-space: nowrap;
     }
 
@@ -90,31 +109,31 @@
       display: flex;
       align-items: center;
       height: 100%;
-      padding: 0 22px;
+      padding: 0 20px;
       font-family: var(--f-cond);
       font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.18em;
+      font-weight: 500;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--muted);
       transition: color 0.2s, background 0.2s;
     }
     .nav-links a:hover,
     .nav-links a.active {
-      color: var(--black);
-      background: var(--white);
+      color: var(--accent);
+      background: rgba(107,191,142,0.08);
     }
 
     .nav-hamburger {
       display: none;
       align-items: center;
       justify-content: center;
-      width: 48px;
+      width: 56px;
       border-left: 1px solid var(--rule);
       background: none;
       border-top: none; border-right: none; border-bottom: none;
-      cursor: crosshair;
-      color: var(--white);
+      cursor: pointer;
+      color: var(--accent);
       font-size: 18px;
     }
 
@@ -125,20 +144,38 @@
       min-height: 100vh;
       display: grid;
       grid-template-rows: 1fr auto;
-      padding-top: 48px;
+      padding-top: 56px;
       position: relative;
       overflow: hidden;
+    }
+
+    /* floating orbs */
+    #home::before, #home::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    #home::before {
+      width: 600px; height: 600px;
+      background: rgba(107,191,142,0.18);
+      top: -100px; right: -100px;
+    }
+    #home::after {
+      width: 500px; height: 500px;
+      background: rgba(77,168,118,0.15);
+      bottom: 0; left: -80px;
     }
 
     .hero-inner {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 60px 48px 0;
+      padding: 60px 56px 0;
       position: relative;
     }
 
-    /* giant background number */
     .hero-ghost {
       position: absolute;
       top: 50%;
@@ -148,7 +185,7 @@
       font-size: clamp(200px, 35vw, 520px);
       line-height: 1;
       color: transparent;
-      -webkit-text-stroke: 1px var(--rule);
+      -webkit-text-stroke: 1px rgba(107,191,142,0.12);
       pointer-events: none;
       user-select: none;
       letter-spacing: -0.04em;
@@ -157,11 +194,11 @@
     .hero-tag {
       font-family: var(--f-cond);
       font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.3em;
+      font-weight: 500;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 16px;
+      color: var(--accent);
+      margin-bottom: 20px;
       opacity: 0;
       animation: up 0.6s 0.1s forwards;
     }
@@ -169,12 +206,14 @@
     .hero-name {
       font-family: var(--f-display);
       font-size: clamp(72px, 12vw, 180px);
-      line-height: 0.9;
-      letter-spacing: 0.01em;
-      color: var(--white);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: var(--black);
       opacity: 0;
       animation: up 0.6s 0.25s forwards;
     }
+
+    .hero-name span { color: var(--accent); }
 
     .hero-rule {
       width: 100%;
@@ -191,6 +230,8 @@
       border-bottom: 1px solid var(--rule);
       opacity: 0;
       animation: up 0.6s 0.55s forwards;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
     }
 
     .hero-bar-item {
@@ -198,10 +239,10 @@
       border-right: 1px solid var(--rule);
       font-family: var(--f-cond);
       font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+      font-weight: 500;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--muted);
     }
 
     .hero-bar-item:last-child { border-right: none; margin-left: auto; color: var(--red); }
@@ -223,6 +264,8 @@
       display: grid;
       grid-template-columns: 80px 1fr;
       border-bottom: 1px solid var(--rule);
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
     }
 
     .section-num-col {
@@ -236,8 +279,9 @@
     .section-num {
       font-family: var(--f-display);
       font-size: 14px;
+      font-weight: 800;
       letter-spacing: 0.12em;
-      color: var(--muted);
+      color: var(--accent);
       writing-mode: vertical-rl;
       transform: rotate(180deg);
     }
@@ -252,16 +296,18 @@
 
     .section-title {
       font-family: var(--f-display);
-      font-size: clamp(48px, 8vw, 100px);
+      font-size: clamp(40px, 7vw, 88px);
       line-height: 0.9;
-      letter-spacing: 0.02em;
-      color: var(--white);
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      color: var(--black);
     }
 
     .section-title-label {
       font-family: var(--f-cond);
       font-size: 10px;
-      letter-spacing: 0.25em;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--muted);
       align-self: flex-end;
@@ -271,6 +317,92 @@
 
     .section-body {
       padding: 64px 48px 64px 128px;
+    }
+
+    /* ═══════════════════════════════
+       WELCOME
+    ═══════════════════════════════ */
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .welcome-photo-wrap {
+      position: relative;
+    }
+
+    .welcome-photo {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: 24px;
+      border: 2px solid var(--glass-border);
+      box-shadow: 0 8px 48px rgba(107,191,142,0.15);
+    }
+
+    .welcome-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 24px;
+      border: 2px dashed var(--rule-solid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-cond);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--glass-bg);
+    }
+
+    .welcome-text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .welcome-greeting {
+      font-family: var(--f-display);
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .welcome-body {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--light);
+      max-width: 560px;
+    }
+
+    .welcome-body strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .welcome-thanks {
+      font-family: var(--f-cond);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 900px) {
+      .welcome-grid { grid-template-columns: 1fr; gap: 36px; }
+      .welcome-photo, .welcome-photo-placeholder { max-width: 260px; }
+      .welcome-greeting { font-size: 36px; }
     }
 
     /* ═══════════════════════════════
@@ -287,8 +419,13 @@
        PROJECT CARD
     ═══════════════════════════════ */
     .project {
-      border: 1px solid var(--rule);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
       margin-bottom: 32px;
+      overflow: hidden;
     }
 
     .project-head {
@@ -300,8 +437,9 @@
     .project-index {
       font-family: var(--f-display);
       font-size: 56px;
+      font-weight: 800;
       line-height: 1;
-      color: var(--rule);
+      color: rgba(107,191,142,0.15);
       padding: 20px 28px;
       border-right: 1px solid var(--rule);
       align-self: stretch;
@@ -316,18 +454,19 @@
     .project-tag {
       font-family: var(--f-cond);
       font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.25em;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--accent);
       margin-bottom: 8px;
     }
 
     .project-title {
       font-family: var(--f-display);
-      font-size: clamp(18px, 2.5vw, 28px);
-      letter-spacing: 0.04em;
-      color: var(--white);
+      font-size: clamp(18px, 2.5vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--black);
       line-height: 1.1;
     }
 
@@ -347,9 +486,9 @@
       font-family: var(--f-cond);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--accent);
       margin: 28px 0 12px;
       display: flex;
       align-items: center;
@@ -384,14 +523,15 @@
 
     .skill-list li::before {
       content: '—';
-      color: var(--muted);
+      color: var(--accent);
       flex-shrink: 0;
       margin-top: 1px;
     }
 
     /* image placeholder */
     .img-slot {
-      border: 1px dashed var(--rule);
+      border: 1.5px dashed var(--rule-solid);
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -405,6 +545,7 @@
       text-transform: uppercase;
       margin-top: 28px;
       aspect-ratio: 16/7;
+      background: rgba(255,255,255,0.3);
     }
 
     .img-slot-icon { font-size: 20px; opacity: 0.3; }
@@ -415,6 +556,7 @@
       display: block;
       object-fit: cover;
       margin-top: 28px;
+      border-radius: 12px;
     }
 
     /* ═══════════════════════════════
@@ -423,8 +565,12 @@
     .semester-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--rule);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
       margin-top: 40px;
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
     }
 
     .sem {
@@ -439,7 +585,8 @@
     .sem-num {
       font-family: var(--f-display);
       font-size: 42px;
-      color: var(--rule);
+      font-weight: 800;
+      color: rgba(107,191,142,0.15);
       line-height: 1;
       margin-bottom: 16px;
     }
@@ -447,9 +594,10 @@
     .sem-label {
       font-family: var(--f-cond);
       font-size: 9px;
+      font-weight: 600;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--accent);
       margin-bottom: 14px;
     }
 
@@ -463,10 +611,11 @@
     }
     .sem li:last-child { border-bottom: none; }
 
-    .sem.soon { opacity: 0.25; }
+    .sem.soon { opacity: 0.35; }
     .sem.soon .sem-soon {
       font-family: var(--f-display);
       font-size: 18px;
+      font-weight: 800;
       color: var(--muted);
       letter-spacing: 0.08em;
     }
@@ -477,45 +626,53 @@
     .mobility-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 1px solid var(--rule);
+      gap: 24px;
     }
 
     .mob-card {
       padding: 40px;
-      border-right: 1px solid var(--rule);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
       position: relative;
+      overflow: hidden;
     }
 
-    .mob-card:last-child { border-right: none; }
+    .mob-card:last-child { }
 
     .mob-num {
       font-family: var(--f-display);
       font-size: 120px;
-      color: var(--rule);
+      font-weight: 800;
+      color: rgba(107,191,142,0.06);
       line-height: 1;
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 10px;
+      right: 16px;
       user-select: none;
     }
 
     .mob-date {
       font-family: var(--f-cond);
       font-size: 10px;
-      letter-spacing: 0.25em;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--accent);
       margin-bottom: 12px;
     }
 
     .mob-place {
       font-family: var(--f-display);
       font-size: clamp(36px, 5vw, 60px);
-      color: var(--white);
+      font-weight: 800;
+      color: var(--black);
       line-height: 0.9;
       margin-bottom: 24px;
       position: relative;
+      letter-spacing: -0.02em;
     }
 
     .mob-text {
@@ -527,7 +684,13 @@
     /* ═══════════════════════════════
        ENGAGEMENT
     ═══════════════════════════════ */
-    .eng-list { border: 1px solid var(--rule); }
+    .eng-list {
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+    }
 
     .eng-item {
       display: grid;
@@ -538,12 +701,13 @@
     }
 
     .eng-item:last-child { border-bottom: none; }
-    .eng-item:hover { background: var(--off); }
+    .eng-item:hover { background: rgba(107,191,142,0.06); }
 
     .eng-n {
       font-family: var(--f-display);
       font-size: 13px;
-      color: var(--muted);
+      font-weight: 800;
+      color: rgba(107,191,142,0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -558,19 +722,19 @@
     .eng-cat {
       font-family: var(--f-cond);
       font-size: 9px;
+      font-weight: 600;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--accent);
       margin-bottom: 4px;
     }
 
     .eng-name {
       font-family: var(--f-cond);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--white);
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--black);
       margin-bottom: 4px;
     }
 
@@ -584,6 +748,7 @@
       padding: 20px 24px;
       font-family: var(--f-cond);
       font-size: 10px;
+      font-weight: 500;
       letter-spacing: 0.15em;
       color: var(--muted);
       display: flex;
@@ -599,6 +764,7 @@
     .cat-heading {
       font-family: var(--f-cond);
       font-size: 10px;
+      font-weight: 600;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--muted);
@@ -613,38 +779,45 @@
     .sport-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--rule);
+      gap: 20px;
     }
 
     .sport-card {
       padding: 36px 28px;
-      border-right: 1px solid var(--rule);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
     }
 
-    .sport-card:last-child { border-right: none; }
+    .sport-card:last-child { }
 
     .sport-num {
       font-family: var(--f-display);
       font-size: 64px;
-      color: var(--rule);
+      font-weight: 800;
+      color: rgba(107,191,142,0.1);
       line-height: 1;
       margin-bottom: 20px;
     }
 
     .sport-name {
       font-family: var(--f-display);
-      font-size: 28px;
-      letter-spacing: 0.04em;
-      color: var(--white);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--black);
       margin-bottom: 16px;
     }
 
     .sport-cat {
       font-family: var(--f-cond);
       font-size: 9px;
+      font-weight: 600;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--red);
+      color: var(--accent);
       margin-bottom: 12px;
     }
 
@@ -660,32 +833,35 @@
     .career-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--rule);
+      gap: 16px;
     }
 
     .career-card {
       padding: 36px 28px;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
       display: flex;
       flex-direction: column;
       gap: 12px;
-      cursor: crosshair;
-      transition: background 0.2s;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .career-card:hover { background: var(--off); }
-    .career-card:nth-child(3n) { border-right: none; }
-    .career-card:nth-last-child(-n+3) { border-bottom: none; }
-
-    .career-card a {
-      display: contents;
+    .career-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 48px rgba(107,191,142,0.18);
     }
+
+    .career-card a { display: contents; }
 
     .career-icon {
       font-family: var(--f-display);
       font-size: 40px;
-      color: var(--rule);
+      font-weight: 800;
+      color: rgba(107,191,142,0.2);
       line-height: 1;
     }
 
@@ -693,41 +869,44 @@
       font-family: var(--f-cond);
       font-size: 14px;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--black);
     }
 
     .career-sub {
       font-size: 12px;
-      color: var(--mid);
+      color: var(--muted);
       line-height: 1.5;
     }
 
     .career-link {
       font-family: var(--f-cond);
       font-size: 10px;
-      letter-spacing: 0.2em;
+      font-weight: 600;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--accent);
       display: inline-flex;
       align-items: center;
       gap: 6px;
       margin-top: auto;
       padding: 8px 0;
-      border-bottom: 1px solid var(--white);
-      transition: color 0.2s;
+      border-bottom: 1px solid var(--accent);
+      transition: color 0.2s, opacity 0.2s;
       width: fit-content;
     }
-    .career-link:hover { color: var(--light); border-color: var(--light); }
+    .career-link:hover { opacity: 0.7; }
 
     /* ═══════════════════════════════
        FOOTER
     ═══════════════════════════════ */
     footer {
-      border-top: 1px solid var(--rule);
+      border-top: 1px solid var(--glass-border);
       display: grid;
       grid-template-columns: 80px 1fr auto;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(20px);
     }
 
     .footer-left {
@@ -741,7 +920,8 @@
     .footer-left span {
       font-family: var(--f-display);
       font-size: 11px;
-      color: var(--muted);
+      font-weight: 800;
+      color: rgba(107,191,142,0.3);
       writing-mode: vertical-rl;
       transform: rotate(180deg);
       letter-spacing: 0.15em;
@@ -751,8 +931,9 @@
       padding: 28px 48px;
       font-family: var(--f-display);
       font-size: clamp(28px, 5vw, 56px);
-      color: var(--rule);
-      letter-spacing: 0.04em;
+      font-weight: 800;
+      color: rgba(107,191,142,0.12);
+      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
     }
@@ -769,6 +950,7 @@
     .footer-copy {
       font-family: var(--f-cond);
       font-size: 10px;
+      font-weight: 500;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--muted);
@@ -784,9 +966,10 @@
         display: flex;
         flex-direction: column;
         position: fixed;
-        top: 48px; left: 0; right: 0;
-        background: var(--black);
-        border-bottom: 1px solid var(--rule);
+        top: 56px; left: 0; right: 0;
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
       }
       .nav-links.open li { border-left: none; border-top: 1px solid var(--rule); }
       .nav-links.open a { padding: 16px 24px; height: auto; }
@@ -800,21 +983,13 @@
       .hero-ghost { display: none; }
 
       .mobility-grid { grid-template-columns: 1fr; }
-      .mob-card { border-right: none; border-bottom: 1px solid var(--rule); }
-      .mob-card:last-child { border-bottom: none; }
+      .mob-card { }
       .mob-num { display: none; }
 
       .semester-grid { grid-template-columns: 1fr 1fr; }
-      .sem:nth-child(3n) { border-right: 1px solid var(--rule); }
-      .sem:nth-child(2n) { border-right: none; }
 
-      .sport-grid { grid-template-columns: 1fr; }
-      .sport-card { border-right: none; border-bottom: 1px solid var(--rule); }
-      .sport-card:last-child { border-bottom: none; }
-
+      .sport-grid { grid-template-columns: 1fr; gap: 16px; }
       .career-grid { grid-template-columns: 1fr 1fr; }
-      .career-card:nth-child(3n) { border-right: 1px solid var(--rule); }
-      .career-card:nth-child(2n) { border-right: none; }
 
       .skill-list { grid-template-columns: 1fr; }
       .skill-list li:nth-child(odd) { border-right: none; padding-right: 0; }
@@ -828,9 +1003,7 @@
 
     @media (max-width: 600px) {
       .semester-grid { grid-template-columns: 1fr; }
-      .sem:nth-child(n) { border-right: none; }
       .career-grid { grid-template-columns: 1fr; }
-      .career-card:nth-child(n) { border-right: none; }
     }
   </style>
 </head>
@@ -840,6 +1013,7 @@
 <nav>
   <a href="#home" class="nav-logo">LM</a>
   <ul class="nav-links" id="navLinks">
+    <li><a href="#welcome">Welcome</a></li>
     <li><a href="#engineering">Engineering</a></li>
     <li><a href="#mobility">Mobility</a></li>
     <li><a href="#engagement">Engagement</a></li>
@@ -862,6 +1036,33 @@
     <span class="hero-bar-item">Toulouse, France</span>
     <span class="hero-bar-item">2026</span>
     <span class="hero-bar-item">↓ Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════ 00 WELCOME ══════════════ -->
+<section class="section" id="welcome">
+  <div class="section-head">
+    <div class="section-num-col">
+      <span class="section-num">00</span>
+    </div>
+    <div class="section-title-col">
+      <h2 class="section-title">WELCOME</h2>
+      <span class="section-title-label">Who I am</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="welcome-grid r">
+      <div class="welcome-photo-wrap">
+      <img src="images/IMG_7238pp.JPG" alt="Lucas MOUSSY" class="welcome-photo">
+      </div>
+      <div class="welcome-text-block">
+        <p class="welcome-greeting">My name is <span style="color:var(--white);font-weight:500;">Lucas.</span></p>
+        <p class="welcome-body">I am a passionate first-year student at <strong>ENSEEIHT (N7)</strong>, a leading French graduate school of engineering.</p>
+        <p class="welcome-body">I am currently pursuing my degree in the <strong>Digital Sciences department</strong>, where I am developing a strong foundation in computer science, data, and digital systems.</p>
+        <p class="welcome-body">This e-portfolio serves as a living showcase of my projects, learnings, progress and who I am.</p>
+        <p class="welcome-thanks">Thank you for visiting.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -905,13 +1106,11 @@
 
         <div class="sub-label">Reflection</div>
         <p class="project-text">We proved technical feasibility but concluded that detecting bottles alone provides limited environmental benefit without collaboration with specialists. We also found that more complex CNN models carry significantly higher energy costs — a critical factor often overlooked.</p>
-
-        <!-- Image placeholder — replace with: <img class="img-real" src="images/project-gradient.jpg" alt="Gradient Descent project"> -->
-        <div class="img-slot">
-          <span class="img-slot-icon">[ ]</span>
-          <span>images/project-gradient.jpg</span>
-          <span style="font-size:9px;color:var(--muted);margin-top:2px;">Replace placeholder with your image</span>
-        </div>
+       <iframe 
+      src="PDF/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf" 
+      style="width:100%; height:600px; border:1px solid var(--rule); margin-top:28px; display:block;"
+      title="Rapport du projet">
+</iframe>
       </div>
     </div>
 
@@ -1170,46 +1369,61 @@
     <div class="career-grid r">
 
       <div class="career-card">
-        <div class="career-icon">CV</div>
-        <p class="career-name">Curriculum Vitae</p>
-        <p class="career-sub">My complete resume — formation, projects, and experience.</p>
-        <!-- Update href to your actual PDF path -->
-        <a href="images/cv-lucas-moussy.pdf" class="career-link" target="_blank">View PDF →</a>
-      </div>
+  <div class="career-icon">CV</div>
+  <p class="career-name">Curriculum Vitae</p>
+  <p class="career-sub">My complete resume — formation, projects, and experience.</p>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; border:1.5px dashed var(--rule-solid); border-radius:12px; margin-top:8px; padding:32px; text-align:center;">
+    <div>
+      <div style="font-family:var(--f-display); font-size:48px; font-weight:800; color:rgba(107,191,142,0.2); line-height:1; margin-bottom:12px;">PDF</div>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:16px;">Click below to open the full resume</p>
+      <a href="PDF/CV-6.pdf" class="career-link" target="_blank">View PDF →</a>
+    </div>
+  </div>
+</div>
+
+<div class="career-card">
+  <div class="career-icon">LI</div>
+  <p class="career-name">LinkedIn</p>
+  <p class="career-sub">My professional profile and network.</p>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; border:1.5px dashed var(--rule-solid); border-radius:12px; margin-top:8px; padding:32px; text-align:center;">
+    <div>
+      <div style="font-family:var(--f-display); font-size:48px; font-weight:800; color:rgba(107,191,142,0.2); line-height:1; margin-bottom:12px;">in</div>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:16px;">Lucas Moussy · ENSEEIHT N7</p>
+      <a href="https://www.linkedin.com/in/lucas-moussy-31b168379" class="career-link" target="_blank">Open Profile →</a>
+    </div>
+  </div>
+</div>
 
       <div class="career-card">
-        <div class="career-icon">LI</div>
-        <p class="career-name">LinkedIn</p>
-        <p class="career-sub">My professional profile and network.</p>
-        <!-- Update href to your actual LinkedIn URL -->
-        <a href="https://linkedin.com/in/" class="career-link" target="_blank">Open Profile →</a>
-      </div>
-
-      <div class="career-card">
-        <div class="career-icon">JP</div>
-        <p class="career-name">Japanese Presentation</p>
-        <p class="career-sub">自己紹介 — Self-introduction in Japanese.</p>
-        <!-- <img class="img-real" src="images/presentation-jp.jpg" alt="Japanese presentation"> -->
-        <div class="img-slot" style="margin-top:8px;aspect-ratio:4/3;">
-          <span class="img-slot-icon">[ ]</span><span>images/presentation-jp.jpg</span>
-        </div>
-      </div>
+  <div class="career-icon">JP</div>
+  <p class="career-name">Japanese Presentation</p>
+  <p class="career-sub">自己紹介 — Self-introduction in Japanese.</p>
+  <iframe
+    src="https://www.youtube.com/embed/wtxLlxTJiQg"
+    style="width:100%; aspect-ratio:16/9; border:none; margin-top:8px; display:block; border-radius:4px;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    title="Japanese Presentation">
+  </iframe>
+  <a href="https://www.youtube.com/watch?v=wtxLlxTJiQg" target="_blank" class="career-link" style="margin-top:10px;">
+    view on youtube →
+  </a>
+</div>
 
       <div class="career-card">
         <div class="career-icon">EP</div>
         <p class="career-name">Elevator Pitch</p>
         <p class="career-sub">A short video presentation of my profile and ambitions.</p>
-        <!-- Update href to your actual video URL -->
-        <a href="#" class="career-link">Watch Video →</a>
-      </div>
-
-      <div class="career-card" style="grid-column: span 2;">
-        <div class="career-icon">RM</div>
-        <p class="career-name">Role Models</p>
-        <p class="career-sub">LinkedIn profiles of professionals who inspire my career path and engineering vision. Add your role models' LinkedIn links here.</p>
-      </div>
-
-    </div>
+        <iframe
+    src="https://www.youtube.com/embed/afZuVogJ8q0"
+    style="width:100%; aspect-ratio:16/9; border:none; margin-top:8px; display:block; border-radius:4px;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    title="Japanese Presentation">
+  </iframe>
+  <a href="https://www.youtube.com/watch?v=afZuVogJ8q0" target="_blank" class="career-link" style="margin-top:10px;">
+    view on youtube →
+  </a>
   </div>
 </section>
 
