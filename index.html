@@ -970,6 +970,7 @@
         background: rgba(255,255,255,0.85);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--glass-border);
+        z-index: 199;
       }
       .nav-links.open li { border-left: none; border-top: 1px solid var(--rule); }
       .nav-links.open a { padding: 16px 24px; height: auto; }
@@ -982,14 +983,19 @@
       .hero-bar-item { padding: 14px 16px; font-size: 10px; }
       .hero-ghost { display: none; }
 
+      .welcome-grid { grid-template-columns: 1fr; gap: 36px; }
+      .welcome-photo, .welcome-photo-placeholder { max-width: 220px; }
+      .welcome-greeting { font-size: 36px; }
+
       .mobility-grid { grid-template-columns: 1fr; }
-      .mob-card { }
       .mob-num { display: none; }
+      .mob-card { padding: 28px; }
 
       .semester-grid { grid-template-columns: 1fr 1fr; }
 
       .sport-grid { grid-template-columns: 1fr; gap: 16px; }
       .career-grid { grid-template-columns: 1fr 1fr; }
+      .career-card[style*="span 3"] { grid-column: span 2; }
 
       .skill-list { grid-template-columns: 1fr; }
       .skill-list li:nth-child(odd) { border-right: none; padding-right: 0; }
@@ -998,12 +1004,68 @@
       footer { grid-template-columns: 1fr; }
       .footer-left { display: none; }
       .footer-right { border-left: none; border-top: 1px solid var(--rule); flex-direction: row; align-items: center; }
-      .footer-name { padding: 24px; }
+      .footer-name { padding: 24px; font-size: 28px; }
     }
 
     @media (max-width: 600px) {
+      /* Nav */
+      .nav-logo { font-size: 16px; padding: 0 16px; }
+
+      /* Hero */
+      .hero-inner { padding: 28px 16px 0; }
+      .hero-name { font-size: clamp(52px, 16vw, 72px); }
+      .hero-bar { flex-wrap: wrap; }
+      .hero-bar-item { padding: 10px 14px; font-size: 9px; border-bottom: 1px solid var(--rule); }
+
+      /* Sections */
+      .section-body { padding: 28px 16px; }
+      .section-title-col { padding: 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
+      .section-title { font-size: clamp(28px, 10vw, 48px); }
+
+      /* Welcome */
+      .welcome-grid { grid-template-columns: 1fr; gap: 24px; }
+      .welcome-photo { max-width: 180px; border-radius: 16px; }
+      .welcome-greeting { font-size: 28px; }
+      .welcome-body { font-size: 14px; }
+
+      /* Projects */
+      .project-head { grid-template-columns: 1fr; }
+      .project-index { font-size: 36px; padding: 14px 20px; border-right: none; border-bottom: 1px solid var(--rule); }
+      .project-meta { padding: 14px 20px; }
+      .project-body { padding: 20px 16px; }
+      .project-title { font-size: 16px; }
+
+      /* Skill list */
+      .skill-list { grid-template-columns: 1fr; }
+      .skill-list li:nth-child(odd) { border-right: none; padding-right: 0; }
+      .skill-list li:nth-child(even) { padding-left: 0; }
+
+      /* Semester */
       .semester-grid { grid-template-columns: 1fr; }
+
+      /* Mobility */
+      .mob-card { padding: 20px; }
+      .mob-place { font-size: 36px; }
+
+      /* Engagement */
+      .eng-item { grid-template-columns: 36px 1fr; }
+      .eng-date { display: none; }
+      .eng-content { padding: 14px 16px; }
+
+      /* Sport */
+      .sport-grid { grid-template-columns: 1fr; gap: 12px; }
+      .sport-card { padding: 24px 20px; }
+      .sport-num { font-size: 40px; }
+      .sport-name { font-size: 20px; }
+
+      /* Career */
       .career-grid { grid-template-columns: 1fr; }
+      .career-card[style*="span 3"] { grid-column: span 1; }
+      .career-card { padding: 24px 20px; }
+
+      /* Footer */
+      .footer-name { font-size: 22px; padding: 16px; }
+      .footer-right { padding: 16px; }
     }
   </style>
 </head>
