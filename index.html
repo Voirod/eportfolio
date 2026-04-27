@@ -1036,6 +1036,35 @@
       color: var(--muted);
     }
 
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .footer-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-cond);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 7px 12px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+      width: fit-content;
+    }
+
+    .footer-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
     /* ═══════════════════════════════
        RESPONSIVE
     ═══════════════════════════════ */
@@ -1082,6 +1111,7 @@
     }
 
     @media (max-width: 600px) {
+      .projects-soon-grid { grid-template-columns: 1fr !important; }
       .semester-grid { grid-template-columns: 1fr; }
       .career-grid { grid-template-columns: 1fr; }
     }
@@ -1199,6 +1229,50 @@
       </div>
     </div>
 
+    <!-- PROJECTS SOON -->
+<div class="projects-soon-grid r" style="display:grid; grid-template-columns: repeat(2,1fr); gap:16px; margin-bottom:32px;">
+
+  <div class="project" style="opacity:0.45; margin-bottom:0;">
+    <div class="project-head">
+      <div class="project-index">P2</div>
+      <div class="project-meta">
+        <p class="project-tag">School Project · Semester 5 · Coming Soon</p>
+        <h3 class="project-title">PROJECT 2<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="project" style="opacity:0.45; margin-bottom:0;">
+    <div class="project-head">
+      <div class="project-index">P3</div>
+      <div class="project-meta">
+        <p class="project-tag">School Project · Semester 6 · Coming Soon</p>
+        <h3 class="project-title">PROJECT 3<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="project" style="opacity:0.45; margin-bottom:0;">
+    <div class="project-head">
+      <div class="project-index">P4</div>
+      <div class="project-meta">
+        <p class="project-tag">School Project · Semester 7 · Coming Soon</p>
+        <h3 class="project-title">PROJECT 4<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="project" style="opacity:0.45; margin-bottom:0;">
+    <div class="project-head">
+      <div class="project-index">P5</div>
+      <div class="project-meta">
+        <p class="project-tag">School Project · Semester 8 · Coming Soon</p>
+        <h3 class="project-title">PROJECT 5<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+      </div>
+    </div>
+  </div>
+
+</div>
     <!-- FORMATION -->
     <div class="r" style="margin-top:48px;">
       <div class="sub-label">Formation · ENSEEIHT</div>
@@ -1528,6 +1602,16 @@
   <div class="footer-right">
     <span class="footer-copy">© 2026</span>
     <span class="footer-copy">All rights reserved</span>
+    <div class="footer-links">
+      <a href="mailto:lucas.moussy@etu.toulouse-inp.fr" class="footer-btn" title="Send an email">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/lucas-moussy-31b168379" target="_blank" class="footer-btn" title="LinkedIn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
   </div>
 </footer>
 
