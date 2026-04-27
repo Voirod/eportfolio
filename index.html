@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lucas MOUSSY — Student Engineer</title>
+  <link rel="icon" type="image/jpg" href="images/LM.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -42,6 +43,85 @@
       --f-body:    'Inter', sans-serif;
       --f-cond:    'Inter', sans-serif;
     }
+
+    /* ═══════════════════════════════
+       DARK MODE TOKENS
+    ═══════════════════════════════ */
+    body.dark {
+      --bg-from:   #0b1410;
+      --bg-mid:    #0e1a12;
+      --bg-to:     #0a1610;
+
+      --black:     #e8f5ee;
+      --off:       #c8e0d2;
+      --rule:      rgba(107,191,142,0.14);
+      --rule-solid:#2a4a35;
+      --muted:     #5a8a6e;
+      --mid:       #7abf96;
+      --light:     #a8d4b8;
+      --white:     #d0eedb;
+      --accent:    #6BBF8E;
+      --accent2:   #4da876;
+      --mark:      #4a8a62;
+      --red:       #e05c6a;
+
+      --glass-bg:        rgba(15,30,20,0.65);
+      --glass-bg-strong: rgba(18,36,24,0.80);
+      --glass-border:    rgba(107,191,142,0.15);
+      --glass-shadow:    0 4px 32px rgba(0,0,0,0.3), 0 1px 0 rgba(107,191,142,0.08) inset;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-mid) 50%, var(--bg-to) 100%);
+    }
+
+    body.dark nav {
+      background: rgba(10,20,14,0.80);
+      border-bottom-color: var(--glass-border);
+    }
+
+    body.dark .hero-bar {
+      background: rgba(10,20,14,0.60);
+    }
+
+    body.dark .section-head {
+      background: rgba(12,24,16,0.70);
+    }
+
+    body.dark footer {
+      background: rgba(10,20,14,0.75);
+    }
+
+    body.dark .nav-links.open {
+      background: rgba(10,20,14,0.95);
+    }
+
+    /* Dark mode toggle button */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-left: 1px solid var(--rule);
+      background: none;
+      border-top: none; border-right: none; border-bottom: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 18px;
+      transition: color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      color: var(--accent);
+      background: rgba(107,191,142,0.08);
+    }
+
+    .theme-toggle .icon-sun  { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    body.dark .theme-toggle .icon-sun  { display: block; }
+    body.dark .theme-toggle .icon-moon { display: none; }
 
     /* ═══════════════════════════════
        RESET
@@ -970,7 +1050,6 @@
         background: rgba(255,255,255,0.85);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--glass-border);
-        z-index: 199;
       }
       .nav-links.open li { border-left: none; border-top: 1px solid var(--rule); }
       .nav-links.open a { padding: 16px 24px; height: auto; }
@@ -983,19 +1062,14 @@
       .hero-bar-item { padding: 14px 16px; font-size: 10px; }
       .hero-ghost { display: none; }
 
-      .welcome-grid { grid-template-columns: 1fr; gap: 36px; }
-      .welcome-photo, .welcome-photo-placeholder { max-width: 220px; }
-      .welcome-greeting { font-size: 36px; }
-
       .mobility-grid { grid-template-columns: 1fr; }
+      .mob-card { }
       .mob-num { display: none; }
-      .mob-card { padding: 28px; }
 
       .semester-grid { grid-template-columns: 1fr 1fr; }
 
       .sport-grid { grid-template-columns: 1fr; gap: 16px; }
       .career-grid { grid-template-columns: 1fr 1fr; }
-      .career-card[style*="span 3"] { grid-column: span 2; }
 
       .skill-list { grid-template-columns: 1fr; }
       .skill-list li:nth-child(odd) { border-right: none; padding-right: 0; }
@@ -1004,73 +1078,12 @@
       footer { grid-template-columns: 1fr; }
       .footer-left { display: none; }
       .footer-right { border-left: none; border-top: 1px solid var(--rule); flex-direction: row; align-items: center; }
-      .footer-name { padding: 24px; font-size: 28px; }
+      .footer-name { padding: 24px; }
     }
 
     @media (max-width: 600px) {
-      .section-title {
-    font-size: clamp(22px, 8vw, 40px);
-    word-break: break-word;
-    line-height: 1;
-}
-      /* Nav */
-      .nav-logo { font-size: 16px; padding: 0 16px; }
-
-      /* Hero */
-      .hero-inner { padding: 28px 16px 0; }
-      .hero-name { font-size: clamp(52px, 16vw, 72px); }
-      .hero-bar { flex-wrap: wrap; }
-      .hero-bar-item { padding: 10px 14px; font-size: 9px; border-bottom: 1px solid var(--rule); }
-
-      /* Sections */
-      .section-body { padding: 28px 16px; }
-      .section-title-col { padding: 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
-      .section-title { font-size: clamp(28px, 10vw, 48px); }
-
-      /* Welcome */
-      .welcome-grid { grid-template-columns: 1fr; gap: 24px; }
-      .welcome-photo { max-width: 180px; border-radius: 16px; }
-      .welcome-greeting { font-size: 28px; }
-      .welcome-body { font-size: 14px; }
-
-      /* Projects */
-      .project-head { grid-template-columns: 1fr; }
-      .project-index { font-size: 36px; padding: 14px 20px; border-right: none; border-bottom: 1px solid var(--rule); }
-      .project-meta { padding: 14px 20px; }
-      .project-body { padding: 20px 16px; }
-      .project-title { font-size: 16px; }
-
-      /* Skill list */
-      .skill-list { grid-template-columns: 1fr; }
-      .skill-list li:nth-child(odd) { border-right: none; padding-right: 0; }
-      .skill-list li:nth-child(even) { padding-left: 0; }
-
-      /* Semester */
       .semester-grid { grid-template-columns: 1fr; }
-
-      /* Mobility */
-      .mob-card { padding: 20px; }
-      .mob-place { font-size: 36px; }
-
-      /* Engagement */
-      .eng-item { grid-template-columns: 36px 1fr; }
-      .eng-date { display: none; }
-      .eng-content { padding: 14px 16px; }
-
-      /* Sport */
-      .sport-grid { grid-template-columns: 1fr; gap: 12px; }
-      .sport-card { padding: 24px 20px; }
-      .sport-num { font-size: 40px; }
-      .sport-name { font-size: 20px; }
-
-      /* Career */
       .career-grid { grid-template-columns: 1fr; }
-      .career-card[style*="span 3"] { grid-column: span 1; }
-      .career-card { padding: 24px 20px; }
-
-      /* Footer */
-      .footer-name { font-size: 22px; padding: 16px; }
-      .footer-right { padding: 16px; }
     }
   </style>
 </head>
@@ -1088,6 +1101,10 @@
     <li><a href="#career">Career</a></li>
   </ul>
   <button class="nav-hamburger" id="burger" aria-label="Menu">☰</button>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
 </nav>
 
 <!-- ══════════════ HERO ══════════════ -->
@@ -1178,6 +1195,7 @@
       style="width:100%; height:600px; border:1px solid var(--rule); margin-top:28px; display:block;"
       title="Rapport du projet">
 </iframe>
+      <a href="PDF/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf" class="career-link" target="_blank">View PDF →</a>
       </div>
     </div>
 
@@ -1271,7 +1289,7 @@
         <p class="mob-text" style="margin-top:12px;">The destination is not yet fixed — deliberately. My priority is to find the best academic program and research opportunity aligned with my Digital Sciences specialization, rather than limiting options to a single country.</p>
         <!-- <img class="img-real" src="images/europe.jpg" alt="Europe mobility"> -->
         <div class="img-slot" style="margin-top:24px;aspect-ratio:4/3;">
-          <img src="images/europe.jpg"
+          <img src="images/Europe.png"
         alt="Student Exhibition" 
         style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;">
         </div>
@@ -1401,7 +1419,7 @@
   <p class="sport-cat">Sport · 4×/week</p>
   <h4 class="sport-name">STRENGTH TRAINING</h4>
   <p class="sport-desc">A lesson in discipline, resilience, and stress management. Provides the balance and focus required for engineering studies while teaching how to set and achieve long-term goals.</p>
-  <img src="images/1200x680.jpg" 
+  <img src="images/Salle.png" 
        alt="Strength Training" 
        style="width:100%; aspect-ratio:1/1; object-fit:cover; margin-top:20px; display:block; border-radius:12px;">
 </div>
@@ -1412,7 +1430,7 @@
         <h4 class="sport-name">RUNNING</h4>
         <p class="sport-desc">Builds cardiovascular endurance and serves as an effective way to clear the mind — ensuring focus and energy for academic work throughout the week.</p>
         <img src="images/MjAyMDA5MzdlODMxYTY4YTg1NGQ3YTdiODFiZDAwZjlhYmZhYWQ.webp" 
-          alt="Strength Training" 
+          alt="Running" 
           style="width:100%; aspect-ratio:1/1; object-fit:cover; margin-top:20px; display:block; border-radius:12px;">
       </div>
 
@@ -1421,6 +1439,9 @@
         <p class="sport-cat">Other Activity · ENSEEIHT</p>
         <h4 class="sport-name">IMPROV THEATER</h4>
         <p class="sport-desc">Member of an improvisational theater group at ENSEEIHT. An excellent exercise in creativity, active listening, and thinking on your feet — improving public speaking confidence and adaptability in high-pressure situations.</p>
+        <img src="images/impro.png" 
+          alt="theater" 
+          style="width:100%; aspect-ratio:1/1; object-fit:cover; margin-top:20px; display:block; border-radius:12px;">
       </div>
 
     </div>
@@ -1541,5 +1562,20 @@
   }, { passive: true });
 </script>
 
+<script>
+  // Dark mode toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Load saved preference
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+  }
+
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+  });
+</script>
 </body>
 </html>
