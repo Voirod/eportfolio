@@ -1392,28 +1392,25 @@
         </div>
       </div>
       <div class="project-body">
-        <p class="project-text">A deep analysis of the Gradient Descent algorithm — both its mathematical theory and practical implementation. Applied to image recognition for detecting plastic bottle pollution in the oceans. Carried out during the fourth semester of Classe Préparatoire.</p>
-
-        <p class="project-text">The primary objective was to build and test a neural network capable of determining whether AI could be a viable tool for environmental action — specifically detecting plastic bottle pollution at sea.</p>
+        <p class="project-text">A deep analysis of the Gradient Descent algorithm — mathematical theory and practical implementation in Python — applied to detecting plastic bottle pollution at sea. We built a custom MLP neural network from scratch and trained it on a 6,000-image ocean dataset, then benchmarked it against a TensorFlow reference model.</p>
 
         <div class="sub-label">Key Skills</div>
         <ul class="skill-list">
-          <li><strong>Algorithm Implementation</strong> — Gradient Descent in Python: classic, stochastic & momentum-based versions.</li>
-          <li><strong>Neural Network Development</strong> — Custom MLP with Reseau & Neurone classes from scratch.</li>
-          <li><strong>Model Training & Application</strong> — MNIST dataset + custom 6,000-image ocean bottle dataset.</li>
-          <li><strong>Comparative Analysis</strong> — Custom model (87% precision) vs TensorFlow (99.89% precision).</li>
-          <li><strong>Ecological Impact</strong> — CarbonTracker to measure kWh and CO₂ emissions of the AI.</li>
+          <li><strong>Algorithm Implementation</strong> — Classic, stochastic & momentum-based Gradient Descent in Python.</li>
+          <li><strong>Neural Network</strong> — Custom MLP (Reseau & Neurone classes) trained on MNIST + custom dataset.</li>
+          <li><strong>Comparative Analysis</strong> — Custom model (87%) vs TensorFlow (99.89% precision).</li>
+          <li><strong>Ecological Impact</strong> — CarbonTracker to measure kWh and CO₂ cost of the AI.</li>
           <li><strong>Collaborative Dev</strong> — Git, Overleaf, Notion within a six-person team.</li>
         </ul>
 
         <div class="sub-label">Reflection</div>
-        <p class="project-text">We proved technical feasibility but concluded that detecting bottles alone provides limited environmental benefit without collaboration with specialists. We also found that more complex CNN models carry significantly higher energy costs — a critical factor often overlooked.</p>
-       <iframe 
-      src="PDF/Projet/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf" 
-      style="width:100%; height:600px; border:1px solid var(--rule); margin-top:28px; display:block;"
-      title="Rapport du projet">
-</iframe>
-      <a href="PDF/Projet/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf" class="career-link" target="_blank">View PDF →</a>
+        <p class="project-text">We proved technical feasibility but found that more complex CNN models carry significantly higher energy costs — and that detecting bottles alone has limited environmental impact without collaboration with field specialists.</p>
+        <iframe
+          src="PDF/Projet/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf"
+          style="width:100%; height:600px; border:1px solid var(--rule); margin-top:28px; display:block;"
+          title="Rapport du projet">
+        </iframe>
+        <a href="PDF/Projet/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf" class="career-link" target="_blank">View PDF →</a>
       </div>
     </div>
 
@@ -1455,33 +1452,94 @@
     </div>
   </div>
 
-  <div class="project" style="opacity:0.45; margin-bottom:0;">
+  <div class="project" style="margin-bottom:0;">
     <div class="project-head">
       <div class="project-index">P3</div>
       <div class="project-meta">
-        <p class="project-tag">School Project · Semester 6 · Coming Soon</p>
-        <h3 class="project-title">PROJECT 3<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+        <p class="project-tag">School Project · Semester 5 · Imperative Programming · C · SDL2</p>
+        <h3 class="project-title">DIJKSTRA'S ALGORITHM<br>PATHFINDING ON A HEIGHTMAP</h3>
       </div>
+    </div>
+    <div class="project-body">
+      <p class="project-text">Implementation of Dijkstra's shortest path algorithm in C, applied to a weighted grid representing a terrain heightmap. The project goes beyond the classic algorithm: the cost function incorporates both Euclidean distance between grid nodes and positive elevation gain, so the computed path reflects real traversal effort across varying terrain.</p>
+
+      <p class="project-text">The program takes a <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">.grille</code> file as input — encoding the terrain's width, depth, and altitude values — then visualises the grid and the computed optimal path in an interactive SDL2 window. Several terrain presets were included: a flat grid, a walled maze (<em>murs.grille</em>), and a mountain landscape (<em>montagne1.grille</em>).</p>
+
+      <div class="sub-label">Architecture & Key Modules</div>
+      <ul class="skill-list">
+        <li><strong>dijkstra.c/.h</strong> — Core algorithm: priority-queue loop, cost computation (distance + dénivelé), recursive path reconstruction via <em>construire_chemin_vers</em>.</li>
+        <li><strong>grille.c/.h</strong> — Heightmap data structure (width × depth float array), neighbour retrieval with altitude-threshold filtering.</li>
+        <li><strong>liste_noeud.c/.h</strong> — Linked-list of nodes storing coordinates, predecessor, and cumulative cost; used as both the to-visit queue and the visited set.</li>
+        <li><strong>app.c + SDL2</strong> — Graphical rendering pipeline: viewport, window management, animated path highlight, mouse/keyboard event loop.</li>
+        <li><strong>grille_file.c</strong> — File I/O to load terrain grids from disk; includes a random terrain generator.</li>
+        <li><strong>Makefile + test suite</strong> — Separate test binaries for each module (test_dijkstra, test_grille, test_liste_noeud, test_coord).</li>
+      </ul>
+
+      <div class="sub-label">Reflection</div>
+      <p class="project-text">This project was my first serious experience with C at this scale — managing dynamic memory manually, separating header specifications from implementations, and integrating a graphical library. Implementing Dijkstra from scratch, rather than using a library, forced a deep understanding of the priority queue logic and the path reconstruction step. The visual output via SDL2 was particularly rewarding: seeing the algorithm explore the terrain and highlight the optimal path made the abstract algorithm concrete.</p>
     </div>
   </div>
 
-  <div class="project" style="opacity:0.45; margin-bottom:0;">
+  <div class="project" style="margin-bottom:0;">
     <div class="project-head">
       <div class="project-index">P4</div>
       <div class="project-meta">
-        <p class="project-tag">School Project · Semester 7 · Coming Soon</p>
-        <h3 class="project-title">PROJECT 4<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+        <p class="project-tag">School Project · Semester 6 · Individual · Networks · YANE / Linux / Quagga</p>
+        <h3 class="project-title">SIMPLIFIED ISP<br>NETWORK ARCHITECTURE</h3>
       </div>
+    </div>
+    <div class="project-body">
+      <p class="project-text">Design and deployment of a complete, virtualised ISP (Internet Service Provider) infrastructure using YANE — a Linux-based network emulation environment running Docker containers and network namespaces. The architecture mirrors a real-world FAI: a redundant core network, two client LANs behind configurable boxes, DMZ zones hosting a web server and a DNS server, and full inter-network routing.</p>
+
+      <p class="project-text">All addressing used a personal IP block assigned at project launch (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">42.6.251.0/24</code>), carefully subneted across every segment. The project was validated through a live oral demonstration with hands-on testing of every service.</p>
+
+      <div class="sub-label">Key Skills</div>
+      <ul class="skill-list">
+        <li><strong>IP Addressing & Subnetting</strong> — Full addressing plan across 8+ subnets (/28 blocks) with no overlap.</li>
+        <li><strong>Static & Dynamic Routing</strong> — Static routes first, then RIP v2 (Quagga/ripd) on all three FAI routers for dynamic convergence.</li>
+        <li><strong>DHCP Configuration</strong> — ISC DHCP server on each BOX to assign addresses to client LANs (e.g. <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">192.168.89.0/25</code>).</li>
+        <li><strong>DNS — BIND9</strong> — Authoritative zone file for <em>monsupersite.com</em>, A records resolving to FAI web server (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">42.6.251.98</code>).</li>
+        <li><strong>Web Services</strong> — Apache HTTP server in a DMZ, plus a second user-hosted web server accessible cross-client.</li>
+        <li><strong>Firewall — iptables</strong> — FORWARD chain on the Services Router: default DROP policy, selective ACCEPT for TCP port 80 to the web DMZ + stateful ESTABLISHED/RELATED return traffic.</li>
+      </ul>
+
+      <div class="sub-label">Reflection</div>
+      <p class="project-text">This was my first end-to-end infrastructure project — building every layer from addressing to application services. The most challenging part was getting RIP to converge correctly while iptables rules didn't block legitimate return traffic. Working in a virtualised environment closely resembling real equipment (Docker + Linux namespaces) gave me a solid, practical foundation in network administration that complements the theoretical coursework.</p>
     </div>
   </div>
 
-  <div class="project" style="opacity:0.45; margin-bottom:0;">
+  <div class="project" style="margin-bottom:0;">
     <div class="project-head">
       <div class="project-index">P5</div>
       <div class="project-meta">
-        <p class="project-tag">School Project · Semester 8 · Coming Soon</p>
-        <h3 class="project-title">PROJECT 5<br><span style="font-size:14px;color:var(--muted);font-family:var(--f-cond);font-weight:500;letter-spacing:0.1em;">SOON</span></h3>
+        <p class="project-tag">School Project · Semester 6 · Group of 8 · Object Technology · Java Swing · Agile</p>
+        <h3 class="project-title">NUTRICOACH<br>METABOLIC REGULATION ASSISTANT</h3>
       </div>
+    </div>
+    <div class="project-body">
+      <p class="project-text">NutriCoach is a full Java Swing desktop application for metabolic self-regulation through the balance of nutrition, sport, and wellbeing. Built over three Agile iterations by a team of 8, the project covers nutritional goal calculation (Harris-Benedict formula), weekly sport planning, statistical tracking with a logarithmic evolution model, and a multi-role user account system — all persisted to CSV and flat-file storage with no external database dependency.</p>
+
+      <p class="project-text">My personal contribution centred on the <strong>assistantNutritionnel</strong> module — a polymorphic food class hierarchy (<em>Aliment → AlimentPesable / AlimentLiquide / AlimentProportion</em>), a recipe filtering engine, and dynamic portion adjustment to meet the daily caloric target. In iteration 3 I also led the architectural refactoring of <em>FctAppModules</em> and <em>GestionFichier</em> to separate static profile data from dynamic tracking history, resolving team-wide Git conflicts.</p>
+
+      <div class="sub-label">Key Skills</div>
+      <ul class="skill-list">
+        <li><strong>Object-Oriented Design</strong> — Polymorphism, abstract classes, design patterns: Façade (FctAppModules), Strategy + Observer (BlindMode), CardLayout navigation.</li>
+        <li><strong>Java Swing UI</strong> — Multi-page application with JFrame, CardLayout, dynamic theming (light/dark), custom date fields, real-time filtering and responsive image display.</li>
+        <li><strong>Mathematical Modelling</strong> — Logarithmic weight-evolution curve f(x) = ln(x) replacing linear model; streak algorithm for consecutive workout tracking.</li>
+        <li><strong>Agile / SVN</strong> — 3 iterations with individual iteration reports, team point scoring, full repository restructuring between sprints.</li>
+        <li><strong>Data Persistence</strong> — CSV-based recipe and sport databases, per-user flat-file accounts, dynamic graphique.png generation at runtime.</li>
+        <li><strong>Accessibility</strong> — BlindMode via Strategy pattern: switchable numeric vs. screen-reader-friendly display without modifying existing UI classes.</li>
+      </ul>
+
+      <div class="sub-label">Reflection</div>
+      <p class="project-text">This was my first large-scale object-oriented project in a team of 8 — the scale introduced real coordination challenges. The architectural refactoring in iteration 3 was the most technically demanding part: decoupling modules written independently required enforcing strict interface contracts across the team. Working through those constraints gave me a strong foundation in software design principles and collaborative development under an Agile workflow.</p>
+
+      <iframe
+        src="PDF/Projet/rapport3.pdf"
+        style="width:100%; height:600px; border:1px solid var(--rule); margin-top:28px; display:block;"
+        title="Rapport NutriCoach">
+      </iframe>
+      <a href="PDF/Projet/rapport3.pdf" class="career-link" target="_blank">View PDF →</a>
     </div>
   </div>
 
