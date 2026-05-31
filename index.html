@@ -1543,6 +1543,43 @@
     </div>
   </div>
 
+  <div class="project r" style="margin-bottom:0;">
+    <div class="project-head">
+      <div class="project-index">P6</div>
+      <div class="project-meta">
+        <p class="project-tag">School Project · Semester 6 · Individual · OS & Systems · C · Unix</p>
+        <h3 class="project-title">MINISHELL<br>UNIX COMMAND INTERPRETER IN C</h3>
+      </div>
+    </div>
+    <div class="project-body">
+      <p class="project-text">Development of a simplified Unix shell interpreter in C, covering all the fundamental mechanisms of an operating system: process creation and management, signal handling, file I/O redirections, and inter-process communication via pipes. The project was built progressively across six TP sessions, each adding a new layer of system-level functionality on top of the main read-eval loop.</p>
+
+      <p class="project-text">The interpreter uses the <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">readcmd</code> library to parse the input line into a <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">cmdline</code> structure — handling special tokens (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&</code>, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">|</code>, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&gt;</code>, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&lt;</code>) — then executes each fragment via <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">fork</code> / <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">execvp</code>, with the parent optionally waiting or backgrounding the child.</p>
+
+      <div class="sub-label">Implementation Steps</div>
+      <ul class="skill-list">
+        <li><strong>TP1 — Processes</strong> — Main read-eval loop, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">fork</code> + <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">execvp</code> for command execution, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">waitpid</code> for synchronisation, built-in <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">exit</code>.</li>
+        <li><strong>TP2 & TP3 — Signals</strong> — Signal handling with <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">sigaction</code>: SIGINT/SIGCHLD, background process management (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&</code>), zombie reaping.</li>
+        <li><strong>TP4 — Redirections</strong> — I/O redirections (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&gt;</code> / <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&lt;</code>) via <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">open</code> + <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">dup2</code>, file descriptor management in child processes.</li>
+        <li><strong>TP5 & TP6 — Pipes & Select</strong> — Command chaining with <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">pipe</code> + <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">dup2</code> for piped fragments, multiplexed I/O with <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">select</code>.</li>
+        <li><strong>Readline integration</strong> — Command history via GNU <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">readline</code>, compiled with strict flags (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">-Wall -Wextra -Werror -pedantic</code>).</li>
+        <li><strong>Memory management</strong> — Systematic <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">free</code> of <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">readline</code> allocations and <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">cmd_dispose</code> to prevent leaks.</li>
+      </ul>
+
+      <div class="sub-label">Reflection</div>
+      <p class="project-text">Building a shell from scratch made previously abstract OS concepts immediately concrete — every <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">fork</code> and <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">pipe</code> had a visible effect in the terminal. The most demanding part was correctly orchestrating signal handling alongside background processes: avoiding race conditions between SIGCHLD and the main loop required a precise understanding of process state and kernel scheduling. This individual project was a strong exercise in low-level C and careful systems thinking.</p>
+
+      <iframe
+        src="PDF/Projet/Rapport_minishell_MOUSSY_Lucas.pdf"
+        style="width:100%; height:600px; border:1px solid var(--rule); margin-top:28px; display:block;"
+        title="Rapport NutriCoach">
+      </iframe>
+      <a href="PDF/Projet/Rapport_minishell_MOUSSY_Lucas.pdf" class="career-link" target="_blank">View PDF →</a>
+    </div>
+  </div>
+    </div>
+  </div>
+
 </div>
     <!-- FORMATION -->
     <div class="r" style="margin-top:48px;">
