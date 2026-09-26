@@ -521,8 +521,38 @@
 
     .project-head {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto 1fr auto;
       border-bottom: 1px solid var(--rule);
+      cursor: pointer;
+      user-select: none;
+    }
+    .project-head:hover .project-chevron { color: var(--accent2); }
+
+    .project-chevron {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 28px;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform 0.35s ease, color 0.2s ease;
+    }
+    .project-chevron svg { width: 16px; height: 16px; display: block; }
+
+    .project.open .project-chevron { transform: rotate(180deg); }
+
+    .project-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
+    }
+    .project-body > .project-body-inner {
+      overflow: hidden;
+    }
+    .project.open .project-body {
+      grid-template-rows: 1fr;
+      opacity: 1;
     }
 
     .project-index {
@@ -561,7 +591,7 @@
       line-height: 1.1;
     }
 
-    .project-body {
+    .project-body-inner {
       padding: 32px 28px;
     }
 
@@ -649,6 +679,93 @@
       margin-top: 28px;
       border-radius: 12px;
     }
+
+    /* ═══════════════════════════════
+       MOBILITY — CAROUSEL & PHOTO FRAME
+    ═══════════════════════════════ */
+    .carousel-container,
+    .mob-photo {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      margin-top: 24px;
+      margin-bottom: 24px;
+      background: rgba(0,0,0,0.05);
+      aspect-ratio: 4/3; /* default until JS measures the real images */
+    }
+    body.dark .carousel-container,
+    body.dark .mob-photo { background: rgba(255,255,255,0.05); }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-slide img,
+    .mob-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+    .carousel-btn:hover { background: rgba(0,0,0,0.8); }
+    .carousel-btn.carousel-prev { left: 10px; }
+    .carousel-btn.carousel-next { right: 10px; }
+    .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .carousel-dots {
+      position: absolute;
+      left: 0; right: 0; bottom: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      z-index: 10;
+    }
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.55);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .carousel-dot.active { background: #fff; transform: scale(1.35); }
 
     /* ═══════════════════════════════
        SEMESTER GRID
@@ -1217,12 +1334,13 @@
 
       /* — Projects — */
       .project { border-radius: 14px; margin-bottom: 20px; overflow: hidden; }
-      .project-head { grid-template-columns: 52px 1fr; overflow: hidden; }
+      .project-head { grid-template-columns: 52px 1fr auto; overflow: hidden; }
       .project-index { font-size: 32px; padding: 12px 10px; flex-shrink: 0; }
       .project-meta { padding: 12px 10px; min-width: 0; overflow: hidden; }
       .project-tag { font-size: 9px; letter-spacing: 0.08em; white-space: normal; word-break: break-word; }
       .project-title { font-size: 14px; word-break: break-word; }
-      .project-body { padding: 20px 16px; overflow: hidden; }
+      .project-chevron { padding: 0 14px; }
+      .project-body-inner { padding: 20px 16px; overflow: hidden; }
       .project-text { font-size: 13px; max-width: 100%; }
 
       /* PDFs */
@@ -1396,8 +1514,10 @@
           <p class="project-tag">School Project · Semester 4 · Group of 6 · ~80h/person</p>
           <h3 class="project-title">GRADIENT DESCENT<br>MATHEMATICAL & ALGORITHMIC ASPECTS</h3>
         </div>
+        <div class="project-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
       </div>
       <div class="project-body">
+       <div class="project-body-inner">
         <p class="project-text">A deep analysis of the Gradient Descent algorithm — mathematical theory and practical implementation in Python — applied to detecting plastic bottle pollution at sea. We built a custom MLP neural network from scratch and trained it on a 6,000-image ocean dataset, then benchmarked it against a TensorFlow reference model.</p>
 
         <div class="sub-label">Key Skills</div>
@@ -1417,6 +1537,7 @@
           title="Rapport du projet">
         </iframe>
         <a href="PDF/Projet/Rapport_DESCENTE_DE_GRADIENT_ASPECTS_MATHEMATIQUES_ET_ALGORITHMIQUES-2.pdf" class="career-link" target="_blank">View PDF →</a>
+       </div>
       </div>
     </div>
 
@@ -1427,8 +1548,10 @@
         <p class="project-tag">School Project · Semester 5 · Group of 3 · ~31h/person · Imperative Programming · Ada</p>
         <h3 class="project-title">ROUTING TABLE<br>STORAGE & EXPLOITATION IN ADA</h3>
       </div>
+      <div class="project-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
     </div>
     <div class="project-body">
+     <div class="project-body-inner">
       <p class="project-text">Design and implementation of a router's routing table in Ada, carried out during the fifth semester at ENSEEIHT as part of the Imperative Programming module. Over several weeks, we implemented, evaluated, and compared multiple approaches to exploiting a routing table through different refinements, modules, scenarios, and test suites.</p>
 
       <p class="project-text">The project was structured around three routers of increasing complexity: a <strong>Simple Router</strong> (direct table lookup), a <strong>Linked-List Router (LL)</strong> using a generic linked-list module (LC), and a <strong>Tree-based Router (LA)</strong> using a binary tree structure. Two distinct caching systems were also implemented and benchmarked — one linked-list-based (Cache_LC) and one tree-based (Cache_Arbre).</p>
@@ -1452,6 +1575,7 @@
         title="Rapport du projet — Table de Routage">
       </iframe>
       <a href="PDF/Projet/Rapport_table_Routage.pdf" class="career-link" target="_blank">View PDF →</a>
+     </div>
     </div>
   </div>
 
@@ -1462,8 +1586,10 @@
         <p class="project-tag">School Project · Semester 5 · Imperative Programming · C · SDL2</p>
         <h3 class="project-title">DIJKSTRA'S ALGORITHM<br>PATHFINDING ON A HEIGHTMAP</h3>
       </div>
+      <div class="project-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
     </div>
     <div class="project-body">
+     <div class="project-body-inner">
       <p class="project-text">Implementation of Dijkstra's shortest path algorithm in C, applied to a weighted grid representing a terrain heightmap. The project goes beyond the classic algorithm: the cost function incorporates both Euclidean distance between grid nodes and positive elevation gain, so the computed path reflects real traversal effort across varying terrain.</p>
 
       <p class="project-text">The program takes a <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">.grille</code> file as input — encoding the terrain's width, depth, and altitude values — then visualises the grid and the computed optimal path in an interactive SDL2 window. Several terrain presets were included: a flat grid, a walled maze (<em>murs.grille</em>), and a mountain landscape (<em>montagne1.grille</em>).</p>
@@ -1480,6 +1606,7 @@
 
       <div class="sub-label">Reflection</div>
       <p class="project-text">This project was my first serious experience with C at this scale — managing dynamic memory manually, separating header specifications from implementations, and integrating a graphical library. Implementing Dijkstra from scratch, rather than using a library, forced a deep understanding of the priority queue logic and the path reconstruction step. The visual output via SDL2 was particularly rewarding: seeing the algorithm explore the terrain and highlight the optimal path made the abstract algorithm concrete.</p>
+     </div>
     </div>
   </div>
 
@@ -1490,8 +1617,10 @@
         <p class="project-tag">School Project · Semester 6 · Individual · Networks · YANE / Linux / Quagga</p>
         <h3 class="project-title">SIMPLIFIED ISP<br>NETWORK ARCHITECTURE</h3>
       </div>
+      <div class="project-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
     </div>
     <div class="project-body">
+     <div class="project-body-inner">
       <p class="project-text">Design and deployment of a complete, virtualised ISP (Internet Service Provider) infrastructure using YANE — a Linux-based network emulation environment running Docker containers and network namespaces. The architecture mirrors a real-world FAI: a redundant core network, two client LANs behind configurable boxes, DMZ zones hosting a web server and a DNS server, and full inter-network routing.</p>
 
       <p class="project-text">All addressing used a personal IP block assigned at project launch (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">42.6.251.0/24</code>), carefully subneted across every segment. The project was validated through a live oral demonstration with hands-on testing of every service.</p>
@@ -1508,6 +1637,7 @@
 
       <div class="sub-label">Reflection</div>
       <p class="project-text">This was my first end-to-end infrastructure project — building every layer from addressing to application services. The most challenging part was getting RIP to converge correctly while iptables rules didn't block legitimate return traffic. Working in a virtualised environment closely resembling real equipment (Docker + Linux namespaces) gave me a solid, practical foundation in network administration that complements the theoretical coursework.</p>
+     </div>
     </div>
   </div>
 
@@ -1518,8 +1648,10 @@
         <p class="project-tag">School Project · Semester 6 · Group of 8 · Object Technology · Java Swing · Agile</p>
         <h3 class="project-title">NUTRICOACH<br>METABOLIC REGULATION ASSISTANT</h3>
       </div>
+      <div class="project-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
     </div>
     <div class="project-body">
+     <div class="project-body-inner">
       <p class="project-text">NutriCoach is a full Java Swing desktop application for metabolic self-regulation through the balance of nutrition, sport, and wellbeing. Built over three Agile iterations by a team of 8, the project covers nutritional goal calculation (Harris-Benedict formula), weekly sport planning, statistical tracking with a logarithmic evolution model, and a multi-role user account system — all persisted to CSV and flat-file storage with no external database dependency.</p>
 
       <p class="project-text">My personal contribution centred on the <strong>assistantNutritionnel</strong> module — a polymorphic food class hierarchy (<em>Aliment → AlimentPesable / AlimentLiquide / AlimentProportion</em>), a recipe filtering engine, and dynamic portion adjustment to meet the daily caloric target. In iteration 3 I also led the architectural refactoring of <em>FctAppModules</em> and <em>GestionFichier</em> to separate static profile data from dynamic tracking history, resolving team-wide Git conflicts.</p>
@@ -1543,6 +1675,7 @@
         title="Rapport NutriCoach">
       </iframe>
       <a href="PDF/Projet/rapport3.pdf" class="career-link" target="_blank">View PDF →</a>
+     </div>
     </div>
   </div>
 
@@ -1553,8 +1686,10 @@
         <p class="project-tag">School Project · Semester 6 · Individual · OS & Systems · C · Unix</p>
         <h3 class="project-title">MINISHELL<br>UNIX COMMAND INTERPRETER IN C</h3>
       </div>
+      <div class="project-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
     </div>
     <div class="project-body">
+     <div class="project-body-inner">
       <p class="project-text">Development of a simplified Unix shell interpreter in C, covering all the fundamental mechanisms of an operating system: process creation and management, signal handling, file I/O redirections, and inter-process communication via pipes. The project was built progressively across six TP sessions, each adding a new layer of system-level functionality on top of the main read-eval loop.</p>
 
       <p class="project-text">The interpreter uses the <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">readcmd</code> library to parse the input line into a <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">cmdline</code> structure — handling special tokens (<code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&</code>, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">|</code>, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&gt;</code>, <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">&lt;</code>) — then executes each fragment via <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">fork</code> / <code style="font-family:monospace;font-size:12px;background:rgba(107,191,142,0.1);padding:2px 6px;border-radius:4px;">execvp</code>, with the parent optionally waiting or backgrounding the child.</p>
@@ -1578,6 +1713,7 @@
         title="Rapport NutriCoach">
       </iframe>
       <a href="PDF/Projet/Rapport_minishell_MOUSSY_Lucas.pdf" class="career-link" target="_blank">View PDF →</a>
+     </div>
     </div>
   </div>
 
@@ -1610,14 +1746,21 @@
             <li>Soft & Human Skills 2 (EN · JP · Sport · Careers)</li>
           </ul>
         </div>
-        <div class="sem soon">
+        <div class="sem">
           <div class="sem-num">07</div>
           <p class="sem-label">Semester 7</p>
-          <p class="sem-soon">SOON</p>
+          <ul>
+            <li>Functional Programming — Language Translation</li>
+            <li>Concurrent Systems — Middleware</li>
+            <li>Automata Theory — Graph Theory</li>
+            <li>Software and Systems Engineering</li>
+            <li>Optimization — Operations Research</li>
+            <li>Soft & Human Skills 2 (EN · JP · Sport · Careers)</li>
+          </ul>
         </div>
         <div class="sem soon">
-          <div class="sem-num">08</div>
-          <p class="sem-label">Semester 8</p>
+          <div class="sem-num"> 08 </div>
+          <p class="sem-label">Semester 8 (AGH University, Krakow, Poland)</p>
           <p class="sem-soon">SOON</p>
         </div>
         <div class="sem soon">
@@ -1652,17 +1795,97 @@
     <div class="mobility-grid r">
 
       <div class="mob-card">
-        <div class="mob-num" aria-hidden="true">JP</div>
-        <p class="mob-date">Summer 2026 · 7 Weeks · Yokohama, Japan</p>
-        <h3 class="mob-place">JAPAN</h3>
-        <p class="mob-text">The primary objective of this seven-week immersion program in Yokohama is to develop a dual competency: operational proficiency in the Japanese language and an understanding of the country's professional culture. As a future engineer in Digital Sciences, Japan represents a leading technological and industrial ecosystem. This program provides the essential linguistic and intercultural tools indispensable for future collaboration and effective interaction.</p>
-        <!-- <img class="img-real" src="images/japan.jpg" alt="Japan program"> -->
-        <div class="img-slot" style="margin-top:24px;aspect-ratio:4/3;">
-          <img src="images/yokohama.jpg"
-        alt="Student Exhibition" 
-        style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;">
-        </div>
+  <div class="mob-num" aria-hidden="true">JP</div>
+  <p class="mob-date">Summer 2026 · 7 Weeks · Yokohama & Karuizawa, Japan</p>
+  <h3 class="mob-place">CULTURAL IMMERSION & INTERNSHIP</h3>
+  
+  <p class="mob-text">During the first weeks, I participated in the summer seminar at the Kanagawa Kenmin Center. My daily schedule consisted of Japanese (Nihongo) lessons every morning. The afternoons were dedicated to practical Japanese culture (Nihon-bunka) workshops. This program included visiting the Kano house, the SUGINO Fashion College, as well as participating in a Shogi workshop and a company visit.</p>
+
+ <!-- Photo 1 Slot: Carousel for Seminar / Classmates -->
+<div class="carousel-container">
+
+  <div class="carousel-track">
+
+    <div class="carousel-slide">
+      <img src="images/Japan/d319580809e752bd1179cf48db2568e9.jpeg"
+           alt="Japanese language class and cultural workshop group">
+    </div>
+
+    <div class="carousel-slide">
+      <img src="images/Japan/IMG_9429.jpg"
+           alt="Visit to Kano house">
+    </div>
+
+    <div class="carousel-slide">
+      <img src="images/Japan/IMG_9421.jpg"
+           alt="Visit to Kano house">
+    </div>
+
+    <div class="carousel-slide">
+      <img src="images/Japan/93f86c58-2581-4f64-b026-355defad6d5d.jpg"
+           alt="Shogi workshop participation">
+    </div>
+
+    <div class="carousel-slide">
+      <img src="images/Japan/20087d95-d01f-4e13-b0d6-6babcb13205c.jpg"
+           alt="Visit Exoctec company">
+    </div>
+
+  </div>
+
+  <button class="carousel-btn carousel-prev" aria-label="Previous image">&#10094;</button>
+  <button class="carousel-btn carousel-next" aria-label="Next image">&#10095;</button>
+  <div class="carousel-dots"></div>
+
+</div>
+
+  <p class="mob-text">The second phase of my stay was an operational internship in a hotel in the Karuizawa region. My responsibilities covered the daily maintenance and logistics of the establishment: meticulous room preparation, bathroom cleaning, making beds, and dishwashing during meal services. Immersing myself in these tasks forced me to adapt to the rigorous standards of Japanese hospitality while improving my daily Japanese and English communication.</p>
+
+  <!-- Photo 2 Slot: Hotel Work / Interning -->
+  <div class="mob-photo">
+    <img src="images/Japan/KIta-Karuzawa.png"
+         alt="Hotel maintenance and room preparation in Karuizawa">
+  </div>
+
+  <p class="mob-text">Beyond work and studies, I organized a personal itinerary to explore multiple facets of the country, traveling across Tokyo, Kyoto, Nara, and Yokohama. Navigating independently through such a contrasting culture was a true test of adaptability, significantly strengthening my autonomy and resilience.</p>
+
+  <!-- Photo 3 Slot: Carousel for Travel Pictures -->
+  <div class="carousel-container">
+
+    <div class="carousel-track">
+
+      <div class="carousel-slide">
+        <img src="images/Japan/IMG_9768.jpg" alt="Kyoto">
       </div>
+
+      <div class="carousel-slide">
+        <img src="images/Japan/IMG_9843.jpg" alt="Kyoto">
+      </div>
+
+      <div class="carousel-slide">
+        <img src="images/Japan/IMG_9070.jpg" alt="Osaka">
+      </div>
+
+      <div class="carousel-slide">
+        <img src="images/Japan/IMG_9006.jpg" alt="Osaka">
+      </div>
+
+      <div class="carousel-slide">
+        <img src="images/Japan/IMG_8976.jpg" alt="Tokyo">
+      </div>
+
+      <div class="carousel-slide">
+        <img src="images/Japan/IMG_0112.jpg" alt="Fuji">
+      </div>
+
+    </div>
+
+    <button class="carousel-btn carousel-prev" aria-label="Previous image">&#10094;</button>
+    <button class="carousel-btn carousel-next" aria-label="Next image">&#10095;</button>
+    <div class="carousel-dots"></div>
+
+  </div>
+</div>
 
       <div class="mob-card">
         <div class="mob-num" aria-hidden="true">EU</div>
@@ -1670,11 +1893,8 @@
         <h3 class="mob-place">EUROPE</h3>
         <p class="mob-text">My objective is to complete part of a semester at a partner European university. This mobility is intended to deepen my technical expertise within a different academic system, enhance cross-cultural communication skills, and begin building a professional network within the European Union.</p>
         <p class="mob-text" style="margin-top:12px;">The destination is not yet fixed — deliberately. My priority is to find the best academic program and research opportunity aligned with my Digital Sciences specialization, rather than limiting options to a single country.</p>
-        <!-- <img class="img-real" src="images/europe.jpg" alt="Europe mobility"> -->
-        <div class="img-slot" style="margin-top:24px;aspect-ratio:4/3;">
-          <img src="images/Europe.png"
-        alt="Student Exhibition" 
-        style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;">
+        <div class="mob-photo">
+          <img src="images/Europe.png" alt="Student Exhibition">
         </div>
       </div>
 
@@ -1995,6 +2215,94 @@
     body.classList.toggle('dark');
     localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
   });
+</script>
+
+<script>
+  // Projets pliables — repliés par défaut, dépliés au clic sur l'en-tête
+  document.querySelectorAll('#engineering .project-head').forEach(head => {
+    head.addEventListener('click', () => {
+      head.closest('.project').classList.toggle('open');
+    });
+  });
+</script>
+
+<script>
+  // Carrousels mobilité — boutons précédent/suivant + puces
+  function initCarousel(container) {
+    const track = container.querySelector('.carousel-track');
+    const slides = [...track.children];
+    if (slides.length <= 1) {
+      const prev = container.querySelector('.carousel-prev');
+      const next = container.querySelector('.carousel-next');
+      if (prev) prev.style.display = 'none';
+      if (next) next.style.display = 'none';
+    }
+
+    const prevBtn = container.querySelector('.carousel-prev');
+    const nextBtn = container.querySelector('.carousel-next');
+    const dotsWrap = container.querySelector('.carousel-dots');
+
+    const dots = dotsWrap ? slides.map((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Image ' + (i + 1));
+      d.addEventListener('click', () => scrollToSlide(i));
+      dotsWrap.appendChild(d);
+      return d;
+    }) : [];
+
+    function currentIndex() {
+      return Math.round(track.scrollLeft / track.clientWidth);
+    }
+
+    function scrollToSlide(i) {
+      const idx = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+    }
+
+    function updateUI() {
+      const idx = currentIndex();
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      if (prevBtn) prevBtn.disabled = idx === 0;
+      if (nextBtn) nextBtn.disabled = idx === slides.length - 1;
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => scrollToSlide(currentIndex() - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => scrollToSlide(currentIndex() + 1));
+    track.addEventListener('scroll', () => {
+      clearTimeout(track._t);
+      track._t = setTimeout(updateUI, 80);
+    }, { passive: true });
+    window.addEventListener('resize', () => scrollToSlide(currentIndex()));
+
+    updateUI();
+  }
+
+  document.querySelectorAll('#mobility .carousel-container').forEach(initCarousel);
+
+  // Cadre photo : toujours au format paysage, calé sur la plus grande image
+  // paysage. Les images portrait restent centrées dans ce cadre, sans l'agrandir.
+  function fitFrameToLargestImage(frame) {
+    const imgs = [...frame.querySelectorAll('img')];
+    if (!imgs.length) return;
+    Promise.all(imgs.map(img => new Promise(res => {
+      if (img.complete && img.naturalWidth) return res(img);
+      img.addEventListener('load', () => res(img), { once: true });
+      img.addEventListener('error', () => res(img), { once: true });
+    }))).then(loaded => {
+      let best = null;
+      loaded.forEach(img => {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        if (img.naturalWidth < img.naturalHeight) return; // ignore les portraits
+        const area = img.naturalWidth * img.naturalHeight;
+        if (!best || area > best.area) best = { area, w: img.naturalWidth, h: img.naturalHeight };
+      });
+      // Si toutes les images sont en portrait, on garde le format paysage par défaut (4/3)
+      if (best) frame.style.aspectRatio = best.w + ' / ' + best.h;
+    });
+  }
+
+  document.querySelectorAll('#mobility .carousel-container, #mobility .mob-photo').forEach(fitFrameToLargestImage);
 </script>
 </body>
 </html>
