@@ -1085,6 +1085,120 @@
     }
 
     /* ═══════════════════════════════
+       CAM REQUIREMENTS — documents, roadmap, carbon
+    ═══════════════════════════════ */
+    #ppp, #mobility-roadmap, #languages, #mobility-docs { scroll-margin-top: 84px; }
+
+    .welcome-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 6px; }
+    .welcome-links a {
+      font-family: var(--f-cond);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--rule-solid);
+      color: var(--light);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .welcome-links a:hover, .welcome-links a:focus-visible { border-color: var(--accent); background: var(--accent); color: #0f1523; outline: none; }
+
+    .doc-intro { font-size: 13px; line-height: 1.85; color: var(--light); max-width: 62ch; margin: 18px 0 0; }
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0 44px;
+    }
+    .doc-grid--4 { grid-template-columns: repeat(4, 1fr); }
+    .doc-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 20px 22px;
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    a.doc-card.is-ready:hover, a.doc-card.is-ready:focus-visible { transform: translateY(-2px); border-color: var(--accent); outline: none; }
+    .doc-card.is-pending { border-style: dashed; border-color: var(--rule-solid); background: transparent; box-shadow: none; backdrop-filter: none; cursor: default; }
+    .doc-kind { font-family: var(--f-cond); font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); }
+    .doc-title { font-family: var(--f-display); font-size: 17px; font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; color: var(--black); }
+    .doc-desc { font-size: 12px; line-height: 1.75; color: var(--light); }
+    .doc-state {
+      margin-top: auto;
+      align-self: flex-start;
+      font-family: var(--f-cond);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--rule-solid);
+      color: var(--mid);
+    }
+    .doc-card.is-ready .doc-state { background: rgba(107,191,142,0.18); border-color: var(--accent); color: var(--accent2); }
+    .doc-card.is-info .doc-state { border-style: dashed; color: var(--accent2); }
+    .doc-card.is-pending .doc-state { border-style: dashed; }
+
+    /* Roadmap + carbon footprint */
+    .mrm { margin-top: 44px; }
+    .mrm-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; margin-top: 20px; }
+    .mrm-box {
+      padding: 28px 30px;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-shadow);
+    }
+    .mrm-line { list-style: none; margin: 0; padding: 0 0 0 22px; position: relative; display: flex; flex-direction: column; gap: 26px; }
+    .mrm-line::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; border-left: 2px dotted var(--accent2); }
+    .mrm-line li { position: relative; display: flex; flex-direction: column; gap: 4px; }
+    .mrm-line li::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent2);
+      border: 2px solid var(--mm-fill, #fff);
+      box-sizing: border-box;
+    }
+    .mrm-line li.next::before { background: var(--mm-fill, #fff); border-color: var(--accent2); }
+    .mrm-when { font-family: var(--f-cond); font-size: 11px; font-weight: 600; color: var(--accent2); }
+    .mrm-line strong { font-family: var(--f-display); font-size: 20px; font-weight: 800; letter-spacing: -0.01em; color: var(--black); }
+    .mrm-line li span:last-child { font-size: 12px; line-height: 1.75; color: var(--light); }
+    .mrm-carbon-title { font-family: var(--f-display); font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; }
+    .mrm-carbon-sub { font-size: 12px; line-height: 1.75; color: var(--light); }
+    .mrm-bar { display: flex; height: 12px; margin: 18px 0 14px; border-radius: 999px; overflow: hidden; border: 1px dashed var(--rule-solid); }
+    .mrm-bar span { display: block; height: 100%; width: 0; transition: width 0.8s ease; }
+    #mrmBarJP { background: var(--accent2); }
+    #mrmBarKRK { background: var(--accent); opacity: 0.6; }
+    .mrm-rows { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--light); }
+    .mrm-rows li { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+    .mrm-rows b { color: var(--black); font-weight: 600; }
+    .mrm-link { font-family: var(--f-cond); font-size: 11px; font-weight: 600; color: var(--accent2); text-decoration: none; }
+    .mrm-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1024px) { .doc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) {
+      .doc-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 32px; }
+      .doc-card { padding: 18px 18px; border-radius: 14px; }
+      .mrm-grid { grid-template-columns: 1fr; }
+      .mrm-box { padding: 22px 18px; border-radius: 14px; }
+      .mrm { margin-top: 32px; }
+    }
+
+    /* ═══════════════════════════════
        ENGAGEMENT
     ═══════════════════════════════ */
     .eng-list {
@@ -1674,9 +1788,15 @@
       </div>
       <div class="welcome-text-block">
         <p class="welcome-greeting">My name is <span style="color:var(--white);font-weight:500;">Lucas.</span></p>
-        <p class="welcome-body">I am a passionate first-year student at <strong>ENSEEIHT (N7)</strong>, a leading French graduate school of engineering.</p>
+        <p class="welcome-body">I am a passionate student at <strong>ENSEEIHT (N7)</strong>, a leading French graduate school of engineering.</p>
         <p class="welcome-body">I am currently pursuing my degree in the <strong>Digital Sciences department</strong>, where I am developing a strong foundation in computer science, data, and digital systems.</p>
         <p class="welcome-body">This e-portfolio serves as a living showcase of my projects, learnings, progress and who I am.</p>
+        <div class="welcome-links">
+          <a href="#ppp">PPP Career Project</a>
+          <a href="PDF/CVs/CV-ENGLISH.pdf" target="_blank" rel="noopener">CV (EN)</a>
+          <a href="PDF/CVs/CV-FRENCH.pdf" target="_blank" rel="noopener">CV (FR)</a>
+          <a href="https://www.linkedin.com/in/lucas-moussy-31b168379" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
         <p class="welcome-thanks">Thank you for visiting.</p>
       </div>
     </div>
@@ -1762,7 +1882,7 @@
       </ul>
 
       <div class="sub-label">Reflection</div>
-      <p class="project-text">Despite a modest initial interest in the topic, the technical depth of this project proved genuinely rewarding. I significantly improved my fluency in Ada and gained a concrete understanding of how routers handle packet forwarding. The key personal takeaway was the importance of setting clear deadlines within a team — structured organisation was what made it possible to meet objectives within the allocated time.</p>
+      <p class="project-text">Despite a modest initial interest in the topic, the technical depth of this project proved genuinely rewarding. I significantly improved my fluency in Ada and gained a concrete understanding of how routers handle packet forwarding. The key personal takeaway was the importance of setting clear deadlines within a team — structured organization was what made it possible to meet objectives within the allocated time.</p>
 
       <iframe
         src="PDF/Projet/Rapport_table_Routage.pdf"
@@ -1791,7 +1911,7 @@
 
       <div class="sub-label">Architecture & Key Modules</div>
       <ul class="skill-list">
-        <li><strong>dijkstra.c/.h</strong> — Core algorithm: priority-queue loop, cost computation (distance + dénivelé), recursive path reconstruction via <em>construire_chemin_vers</em>.</li>
+        <li><strong>dijkstra.c/.h</strong> — Core algorithm: priority-queue loop, cost computation (distance + elevation gain), recursive path reconstruction via <em>construire_chemin_vers</em>.</li>
         <li><strong>grille.c/.h</strong> — Heightmap data structure (width × depth float array), neighbour retrieval with altitude-threshold filtering.</li>
         <li><strong>liste_noeud.c/.h</strong> — Linked-list of nodes storing coordinates, predecessor, and cumulative cost; used as both the to-visit queue and the visited set.</li>
         <li><strong>app.c + SDL2</strong> — Graphical rendering pipeline: viewport, window management, animated path highlight, mouse/keyboard event loop.</li>
@@ -2164,6 +2284,76 @@
         </div>
       </div>
     </div>
+
+    <div class="mrm r" id="mobility-roadmap">
+      <p class="cat-heading">Roadmap &amp; carbon footprint</p>
+      <div class="mrm-grid">
+        <div class="mrm-box">
+          <ol class="mrm-line">
+            <li class="done">
+              <span class="mrm-when">Summer 2026 · 7 weeks</span>
+              <strong>Japan</strong>
+              <span>Summer seminar at the Kanagawa Kenmin Center in Yokohama, then a hotel internship in Karuizawa.</span>
+            </li>
+            <li class="next">
+              <span class="mrm-when">March – July 2027 · one semester</span>
+              <strong>Kraków, Poland</strong>
+              <span>Erasmus semester at AGH University of Science and Technology.</span>
+            </li>
+          </ol>
+        </div>
+        <div class="mrm-box" id="mrmCarbon">
+          <p class="mrm-carbon-title">Carbon footprint of my trips</p>
+          <p class="mrm-carbon-sub">Emissions of my round trips, against the 6-tonne CO₂e cap set by the N7 regulation.</p>
+          <div class="mrm-bar" aria-hidden="true"><span id="mrmBarJP"></span><span id="mrmBarKRK"></span></div>
+          <ul class="mrm-rows">
+            <li><span>Japan</span><b id="mrmJP">To be calculated</b></li>
+            <li><span>Kraków</span><b id="mrmKRK">To be calculated</b></li>
+            <li><span>Total</span><b id="mrmTotal">—</b></li>
+          </ul>
+          <a class="mrm-link" href="https://agirpourlatransition.ademe.fr/particuliers/bureau/deplacements/calculer-emissions-carbone-trajets" target="_blank" rel="noopener">Method: ADEME trip emissions calculator →</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="cat-heading r" id="languages" style="margin-top:44px;">Languages</p>
+    <div class="doc-grid r">
+      <div class="doc-card is-info">
+        <span class="doc-kind">English</span>
+        <span class="doc-title">Cambridge B2 First</span>
+        <span class="doc-desc">Preparing the certificate required to validate my engineering diploma.</span>
+        <span class="doc-state">In preparation</span>
+      </div>
+      <a class="doc-card is-ready" href="https://www.youtube.com/watch?v=wtxLlxTJiQg" target="_blank" rel="noopener">
+        <span class="doc-kind">Japanese</span>
+        <span class="doc-title">Japanese self-introduction</span>
+        <span class="doc-desc">Japanese lessons every morning during the summer seminar, and a self-introduction video.</span>
+        <span class="doc-state">Watch</span>
+      </a>
+      <div class="doc-card is-info">
+        <span class="doc-kind">Polish</span>
+        <span class="doc-title">Beginner Polish course</span>
+        <span class="doc-desc">A language course at AGH University during my Erasmus semester.</span>
+        <span class="doc-state">March 2027</span>
+      </div>
+    </div>
+
+    <p class="cat-heading r" id="mobility-docs">Mobility documents</p>
+    <div class="doc-grid r">
+      <a class="doc-card is-pending" data-file="PDF/lucas_moussy.pdf">
+        <span class="doc-kind">Attestation</span>
+        <span class="doc-title">Japan summer seminar &amp; Karuizawa internship</span>
+        <span class="doc-desc">Kanagawa Kenmin Center and hotel internship, summer 2026.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Erasmus · AGH</span>
+        <span class="doc-title">Learning Agreement</span>
+        <span class="doc-desc">Courses agreed for my semester in Kraków.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -2175,7 +2365,7 @@
     </div>
     <div class="section-title-col">
       <h2 class="section-title">ENGAGEMENT<br>& INTERESTS</h2>
-      <span class="section-title-label">Sustainability & Civic Action</span>
+      <span class="section-title-label">Sustainability & Civic Engagement</span>
     </div>
   </div>
 
@@ -2274,7 +2464,8 @@
         style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;">
     </div>
 
-  </div>
+
+    
 </section>
 
 <!-- ══════════════ 04 SPORT ══════════════ -->
@@ -2316,9 +2507,9 @@
         <div class="sport-num">03</div>
         <p class="sport-cat">THEATER ACTIVITY · ENSEEIHT</p>
         <h4 class="sport-name">ACTE7</h4>
-        <p class="sport-desc">Acte7 is the theatre club of the N7. Acting on stage is a way to build confidence, public speaking and team spirit, and it gives me a creative break from the engineering curriculum.</p>
+        <p class="sport-desc">Acte7 is the theater club of the N7. Acting on stage is a way to build confidence, public speaking and team spirit, and it gives me a creative break from the engineering curriculum.</p>
         <img src="images/uunbakffctwfgjfe.png" 
-          alt="Acte7, the N7 theatre club" 
+          alt="Acte7, the N7 theater club" 
           style="width:100%; aspect-ratio:1/1; object-fit:cover; margin-top:20px; display:block; border-radius:12px;">
       </div>
 
@@ -2341,6 +2532,8 @@
   </div>
 
   <div class="section-body">
+  <p class="cat-heading r" id="ppp">PPP Career Project</p>
+  <p class="doc-intro r">My Personal &amp; Professional Project in one place: CV, LinkedIn and videos first, then the application file, reports and presentation. Items marked “Coming soon” are being finalized.</p>
   <div class="career-grid r">
 
   <div class="cv-grid" style="display:grid; grid-template-columns: repeat(2,1fr); gap:16px; grid-column: span 3; margin-bottom:0;">
@@ -2348,7 +2541,7 @@
   <div class="career-card">
     <div class="career-icon">FRENCH CV</div>
     <p class="career-name">Curriculum Vitae</p>
-    <p class="career-sub">My complete resume — formation, projects, and experience in french.</p>
+    <p class="career-sub">My complete resume — formation, projects, and experience in French.</p>
     <iframe
       src="PDF/CVs/CV-FRENCH.pdf"
       style="width:100%; height:700px; border:1px solid var(--rule); margin-top:28px; display:block; border-radius:12px;"
@@ -2360,7 +2553,7 @@
   <div class="career-card">
     <div class="career-icon">ENGLISH CV</div>
     <p class="career-name">Curriculum Vitae</p>
-    <p class="career-sub">My complete resume — formation, projects, and experience in english.</p>
+    <p class="career-sub">My complete resume — formation, projects, and experience in English.</p>
     <iframe
       src="PDF/CVs/CV-ENGLISH.pdf"
       style="width:100%; height:700px; border:1px solid var(--rule); margin-top:28px; display:block; border-radius:12px;"
@@ -2413,6 +2606,60 @@
   </div>
 
 </div>
+
+  <p class="cat-heading r" style="margin-top:44px;">Application file, reports &amp; presentation</p>
+  <!-- To publish a document: put its path in data-file (e.g. data-file="PDF/PPP/cover-letter-en.pdf"); the card becomes a link automatically. -->
+  <div class="doc-grid doc-grid--4 r">
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Application file · English</span>
+        <span class="doc-title">Job ad, cover letter &amp; CV</span>
+        <span class="doc-desc">A job ad of my choice with the matching cover letter and English CV.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Application file · French</span>
+        <span class="doc-title">Offre, lettre &amp; CV</span>
+        <span class="doc-desc">A job ad of my choice with the matching cover letter and French CV.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Report · English</span>
+        <span class="doc-title">Mentor interviews</span>
+        <span class="doc-desc">Summaries of my interviews with professionals.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Networking</span>
+        <span class="doc-title">MyJobGlasses</span>
+        <span class="doc-desc">Networking certificate or interview report.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Report · English</span>
+        <span class="doc-title">Internship report</span>
+        <span class="doc-desc">One- to two-page report on my internship.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Self-awareness · optional</span>
+        <span class="doc-title">MBTI &amp; profile tools</span>
+        <span class="doc-desc">Results and takeaways from self-awareness tools.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+      <a class="doc-card is-ready" href="#mobility-roadmap">
+        <span class="doc-kind">Mobility</span>
+        <span class="doc-title">Roadmap &amp; carbon footprint</span>
+        <span class="doc-desc">Dates, time abroad and emissions of my international mobility.</span>
+        <span class="doc-state">See roadmap</span>
+      </a>
+      <a class="doc-card is-pending" data-file="">
+        <span class="doc-kind">Slides · 6 to 8</span>
+        <span class="doc-title">January PPP presentation</span>
+        <span class="doc-desc">The slides presented to the jury, with bibliography.</span>
+        <span class="doc-state">Coming soon</span>
+      </a>
+  </div>
+  </div>
 </section>
 
 <!-- ══════════════ FOOTER ══════════════ -->
@@ -2779,6 +3026,37 @@
       io2.observe(root);
     } else {
       tour();
+    }
+  })();
+</script>
+<script>
+  // Documents: a card becomes a link as soon as its data-file is filled in
+  document.querySelectorAll('.doc-card[data-file]').forEach(function (c) {
+    var f = (c.getAttribute('data-file') || '').trim();
+    if (!f) return;
+    c.setAttribute('href', f);
+    c.setAttribute('target', '_blank');
+    c.setAttribute('rel', 'noopener');
+    c.classList.remove('is-pending');
+    c.classList.add('is-ready');
+    var s = c.querySelector('.doc-state'); if (s) s.textContent = 'Open';
+  });
+
+  // Carbon footprint of the mobility trips, in tonnes of CO2e (ADEME calculator).
+  // Fill these in once calculated, e.g. { cap: 6, japan: 2.4, krakow: 0.1 }
+  (function () {
+    var CARBON = { cap: 6, japan: null, krakow: null };
+    var el = function (id) { return document.getElementById(id); };
+    if (!el('mrmCarbon')) return;
+    var fmt = function (v) { return v.toFixed(1).replace(/\.0$/, '') + ' t CO\u2082e'; };
+    var done = [CARBON.japan, CARBON.krakow].filter(function (v) { return typeof v === 'number'; });
+    if (typeof CARBON.japan === 'number') el('mrmJP').textContent = fmt(CARBON.japan);
+    if (typeof CARBON.krakow === 'number') el('mrmKRK').textContent = fmt(CARBON.krakow);
+    if (done.length === 2) {
+      var total = CARBON.japan + CARBON.krakow;
+      el('mrmTotal').textContent = fmt(total) + ' of ' + CARBON.cap + ' t';
+      el('mrmBarJP').style.width = Math.min(100, CARBON.japan / CARBON.cap * 100) + '%';
+      el('mrmBarKRK').style.width = Math.min(100 - Math.min(100, CARBON.japan / CARBON.cap * 100), CARBON.krakow / CARBON.cap * 100) + '%';
     }
   })();
 </script>
